@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL.csproj", "{8FF0517A-2038-4FE3-8C41-18E1F6CEE82F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8FF0517A-2038-4FE3-8C41-18E1F6CEE82F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FF0517A-2038-4FE3-8C41-18E1F6CEE82F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FF0517A-2038-4FE3-8C41-18E1F6CEE82F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FF0517A-2038-4FE3-8C41-18E1F6CEE82F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D71F472-1D2F-4827-A8A9-3CB54B8AAC31}
+	EndGlobalSection
+EndGlobal
