@@ -16,7 +16,6 @@
             private string firstName;
             private bool isFemale;
             private string lastName;
-            private string phoneNumber;
 
             #endregion
 
@@ -42,10 +41,6 @@
             {
                 get => this.lastName; set => this.lastName = value ?? throw new ArgumentNullException(nameof(this.LastName));
             }
-            public string PhoneNumber
-            {
-                get => phoneNumber; set => phoneNumber = value;
-            }
 
             #endregion
 
@@ -69,13 +64,12 @@
             /// <param name="isFemale">The <see cref="bool"/></param>
             /// <param name="address">The <see cref="string"/></param>
             /// <param name="phoneNumber">The <see cref="string"/></param>
-            public Human(int iD, DateTime dateOfBirth, string firstName, string lastName, bool isFemale, string address, string phoneNumber) : base(iD)
+            public Human(long iD, DateTime dateOfBirth, string firstName, string lastName, bool isFemale, string address) : base(iD)
             {
                 this.Address = address;
                 this.DateOfBirth = dateOfBirth;
                 this.FirstName = firstName;
                 this.LastName = lastName;
-                this.PhoneNumber = phoneNumber;
                 this.IsFemale = isFemale;
                 if (!(iD >= 0 && iD < 1000000000))
                     throw new ArgumentOutOfRangeException(nameof(this.ID));

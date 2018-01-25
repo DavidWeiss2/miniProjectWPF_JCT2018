@@ -29,6 +29,15 @@
         /// </summary>
         public class Dal_imp
         {
+            #region Properties
+
+            public DChild Child { get; } = new DChild();
+            public DContract Contract { get; } = new DContract();
+            public DMother Mother { get; } = new DMother();
+            public DNanny Nanny { get; } = new DNanny();
+
+            #endregion
+
             #region Methods
 
             /// <summary>
@@ -39,18 +48,18 @@
             /// <returns>The <see cref="Func{object, object}"/></returns>
             public static Func<object, object> CreateGetter(Type runtimeType, string propertyName)
             {
-                var propertyInfo = runtimeType.GetProperty(propertyName);
+                System.Reflection.PropertyInfo propertyInfo = runtimeType.GetProperty(propertyName);
 
                 // create a parameter (object obj)
-                var obj = Expression.Parameter(typeof(object), "obj");
+                ParameterExpression obj = Expression.Parameter(typeof(object), "obj");
 
                 // cast obj to runtimeType
-                var objT = Expression.TypeAs(obj, runtimeType);
+                UnaryExpression objT = Expression.TypeAs(obj, runtimeType);
 
                 // property accessor
-                var property = Expression.Property(objT, propertyInfo);
+                MemberExpression property = Expression.Property(objT, propertyInfo);
 
-                var convert = Expression.TypeAs(property, typeof(object));
+                UnaryExpression convert = Expression.TypeAs(property, typeof(object));
                 return (Func<object, object>)Expression.Lambda(convert, obj).Compile();
             }
 

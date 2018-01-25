@@ -18,6 +18,12 @@
 
             #endregion
 
+            public string PhoneNumber
+            {
+                get => this.phoneNumber; set => this.phoneNumber = value;
+            }
+
+            private string phoneNumber;
             #region Properties
 
             public string AddressOfSerchArea
@@ -42,18 +48,19 @@
             /// <summary>
             /// Initializes a new instance of the <see cref="Mother"/> class.
             /// </summary>
-            /// <param name="address">The <see cref="string"/></param>
-            /// <param name="dateOfBirth">The <see cref="DateTime"/></param>
-            /// <param name="firstName">The <see cref="string"/></param>
             /// <param name="iD">The <see cref="int"/></param>
+            /// <param name="firstName">The <see cref="string"/></param>
             /// <param name="lastName">The <see cref="string"/></param>
+            /// <param name="dateOfBirth">The <see cref="DateTime"/></param>
+            /// <param name="address">The <see cref="string"/></param>
             /// <param name="phoneNumber">The <see cref="string"/></param>
-            /// <param name="isFemale">The <see cref="bool"/></param>
             /// <param name="addressOfSerchArea">The <see cref="string"/></param>
             /// <param name="notes">The <see cref="string"/></param>
-            public Mother(string address, DateTime dateOfBirth, string firstName, int iD, string lastName, string phoneNumber, bool isFemale, string addressOfSerchArea, string notes) : base(iD, dateOfBirth, firstName, lastName, isFemale, address, phoneNumber)
+            /// <param name="isFemale">The <see cref="bool"/></param>
+            public Mother(long iD, string firstName, string lastName, DateTime dateOfBirth, string address, string phoneNumber, string addressOfSerchArea, string notes, bool isFemale = true) : base(iD, dateOfBirth, firstName, lastName, isFemale, address)
             {
                 this.AddressOfSerchArea = addressOfSerchArea;
+                this.PhoneNumber = phoneNumber;
                 this.Notes = notes;
             }
 

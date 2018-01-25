@@ -20,6 +20,7 @@
             private int maxAgeApprovel;
             private int maxNumOfChildrens;
             private int minAgeApprovel;
+            private string phoneNumber;
             private string recommendion;
             private double wagePerHour;
             private double wagePerMonth;
@@ -31,23 +32,7 @@
 
             public double Experience
             {
-                get => this.Experience; set => this.Experience = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(this.Experience));
-            }
-            public int Floor
-            {
-                get; set;
-            }
-            public bool IsAcceptingHourlyWage
-            {
-                get; set;
-            }
-            public bool IsElevatorBuilding
-            {
-                get; set;
-            }
-            public bool IsVacationBasedOnTamat
-            {
-                get; set;
+                get => this.experience; set => this.experience = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(this.Experience));
             }
             public bool[] IsWorkingInDay
             {
@@ -55,31 +40,55 @@
             }
             public int MaxAgeApprovel
             {
-                get => this.MaxAgeApprovel; set => this.MaxAgeApprovel = value >= this.MinAgeApprovel ? value : throw new ArgumentOutOfRangeException(nameof(this.MaxAgeApprovel));
+                get => this.maxAgeApprovel; set => this.maxAgeApprovel = value >= this.minAgeApprovel ? value : throw new ArgumentOutOfRangeException(nameof(this.MaxAgeApprovel));
             }
             public int MaxNumOfChildrens
             {
-                get => this.MaxNumOfChildrens; set => this.MaxNumOfChildrens = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(this.MaxNumOfChildrens));
+                get => this.maxNumOfChildrens; set => this.maxNumOfChildrens = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(this.MaxNumOfChildrens));
             }
             public int MinAgeApprovel
             {
-                get => this.MinAgeApprovel; set => this.MinAgeApprovel = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(this.MinAgeApprovel));
+                get => this.minAgeApprovel; set => this.minAgeApprovel = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(this.MinAgeApprovel));
+            }
+            public string PhoneNumber
+            {
+                get => this.phoneNumber; set => this.phoneNumber = value;
             }
             public string Recommendion
             {
-                get => this.Recommendion; set => this.Recommendion = value ?? throw new ArgumentNullException(nameof(this.Recommendion));
+                get => this.recommendion; set => this.recommendion = value ?? throw new ArgumentNullException(nameof(this.Recommendion));
             }
             public double WagePerHour
             {
-                get => this.WagePerHour; set => this.WagePerHour = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(this.WagePerHour));
+                get => this.wagePerHour; set => this.wagePerHour = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(this.WagePerHour));
             }
             public double WagePerMonth
             {
-                get => this.WagePerMonth; set => this.WagePerMonth = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(this.WagePerMonth));
+                get => this.wagePerMonth; set => this.wagePerMonth = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(this.WagePerMonth));
             }
             public double[,] WorkingTimes
             {
                 get => this.workingTimes; set => this.workingTimes = value;
+            }
+            public int Floor
+            {
+                get => this.floor;
+                set => this.floor = value;
+            }
+            public bool IsAcceptingHourlyWage
+            {
+                get => this.isAcceptingHourlyWage;
+                set => this.isAcceptingHourlyWage = value;
+            }
+            public bool IsElevatorBuilding
+            {
+                get => this.isElevatorBuilding;
+                set => this.isElevatorBuilding = value;
+            }
+            public bool IsVacationBasedOnTamat
+            {
+                get => this.isVacationBasedOnTamat;
+                set => this.isVacationBasedOnTamat = value;
             }
 
             #endregion
@@ -107,7 +116,7 @@
             /// <param name="wagePerHour">The <see cref="double"/></param>
             /// <param name="wagePerMonth">The <see cref="double"/></param>
             /// <param name="isFemale">The <see cref="bool"/></param>
-            public Nanny(int iD, DateTime dateOfBirth, string firstName, string lastName, double experience, string address, string phoneNumber, double[,] workingTimes, bool[] isWorkingInDay, bool isAcceptingHourlyWage = false, bool isElevatorBuilding = true, bool isVacationBasedOnTamat = true, int floor = 0, int maxAgeApprovel = 36, int maxNumOfChildrens = 6, int minAgeApprovel = 3, string recommendion = "", double wagePerHour = 25, double wagePerMonth = 5000, bool isFemale = true) : base(iD, dateOfBirth, firstName, lastName, isFemale, address, phoneNumber)
+            public Nanny(long iD, DateTime dateOfBirth, string firstName, string lastName, double experience, string address, string phoneNumber, double[,] workingTimes, bool[] isWorkingInDay, bool isAcceptingHourlyWage = false, bool isElevatorBuilding = true, bool isVacationBasedOnTamat = true, int floor = 0, int maxAgeApprovel = 36, int maxNumOfChildrens = 6, int minAgeApprovel = 3, string recommendion = "", double wagePerHour = 25, double wagePerMonth = 5000, bool isFemale = true) : base(iD, dateOfBirth, firstName, lastName, isFemale, address)
             {
                 this.Experience = experience;
                 this.Floor = floor;
@@ -122,6 +131,7 @@
                 this.WagePerMonth = wagePerMonth;
                 this.IsWorkingInDay = isWorkingInDay;
                 this.WorkingTimes = workingTimes;
+                this.PhoneNumber = phoneNumber;
             }
 
             /// <summary>

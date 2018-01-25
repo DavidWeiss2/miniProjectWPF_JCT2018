@@ -47,7 +47,7 @@
             /// <param name="isDisabled">The <see cref="bool"/></param>
             /// <param name="disableInfo">The <see cref="string"/></param>
             /// <param name="phoneNumber">The <see cref="string"/></param>
-            public Child(int iD, DateTime dateOfBirth, string firstName, string lastName, bool isFemale, Mother mother, string address, bool isDisabled = false, string disableInfo = "", string phoneNumber = "") : base(iD, dateOfBirth, firstName, lastName, isFemale, address, phoneNumber)
+            public Child(long iD, DateTime dateOfBirth, string firstName, string lastName, bool isFemale, Mother mother, string address, bool isDisabled = false, string disableInfo = "") : base(iD, dateOfBirth, firstName, lastName, isFemale, address)
             {
                 this.MotherID = mother.ID;
                 this.IsDisabled = isDisabled;
