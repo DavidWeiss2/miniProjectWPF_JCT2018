@@ -13,7 +13,6 @@
 
             private double childID;
             private DateTime contractExpiredTime;
-            private static int contracts;
             private DateTime contractSignedTime;
             private bool isContractSigned;
             private bool isMotherAndNannyMets;
@@ -34,10 +33,6 @@
             public DateTime ContractExpiredTime
             {
                 get => this.contractExpiredTime; set => this.contractExpiredTime = value;
-            }
-            public static int Contracts
-            {
-                get => contracts; set => contracts = value < 1000000 && value >= 0 ? value : throw new ArgumentOutOfRangeException(nameof(Contracts));
             }
             public DateTime ContractSignedTime
             {
@@ -101,7 +96,7 @@
             /// <param name="MonthsUntilExpired">The <see cref="int"/></param>
             /// <param name="isMotherAndNannyMets">The <see cref="bool"/></param>
             /// <param name="isContractSigned">The <see cref="bool"/></param>
-            public Contract(Nanny nanny, Mother mother, Child child, bool isWagePerHour, int MonthsUntilExpired, bool isMotherAndNannyMets = false, bool isContractSigned = false) : base(++Contracts)
+            public Contract(long id,Nanny nanny, Mother mother, Child child, bool isWagePerHour, DateTime signedTime, DateTime expiredTime, bool isMotherAndNannyMets = false, bool isContractSigned = false) : base(id)
             {
                 this.NannyID = nanny.ID;
                 this.MotherID = mother.ID;
@@ -111,8 +106,8 @@
                 this.WagePerHour = nanny.WagePerHour;
                 this.WagePerMonth = nanny.WagePerMonth;
                 this.IsWagePerHour = nanny.IsAcceptingHourlyWage ? isWagePerHour : isWagePerHour ? throw new ArgumentException(nameof(this.IsWagePerHour)) : isWagePerHour;
-                this.ContractSignedTime = DateTime.Now;
-                this.ContractExpiredTime = MonthsUntilExpired > 0 ? DateTime.Now.AddMonths(MonthsUntilExpired) : throw new ArgumentOutOfRangeException(nameof(this.ContractExpiredTime));
+                this.ContractSignedTime = signedTime;
+                this.ContractExpiredTime = expiredTime;
             }
 
             /// <summary>

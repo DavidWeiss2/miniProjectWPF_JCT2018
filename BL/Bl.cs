@@ -3,6 +3,7 @@
     namespace BL
     {
         using System;
+        using System.Globalization;
 
         /// <summary>
         /// Defines the <see cref="Bl" />
@@ -84,7 +85,7 @@
                         BE.Nanny nanny = this.dal_Imp.GetNanny(idNanny);
                         BE.Child child = this.dal_Imp.GetChild(idChild);
                         BE.Mother mother = this.dal_Imp.GetMother(child.MotherID);
-                        this.dal_Imp.Contract.Add(new BE.Contract(nanny,mother,child,perHourBool.ToBool(),MonthsUntilExpired);
+                        this.dal_Imp.Contract.Add(new BE.Contract(this.dal_Imp.Contract.MaxID+1,nanny,mother,child,perHourBool.ToBool(),dateFrom.FromYYYYMMDD(),dateUntil.FromYYYYMMDD(),);
                     }
                     catch (Exception ex)
                     {
@@ -356,14 +357,16 @@
             public static long ToLong(this string str) => long.Parse(str);
             public static bool ToBool(this string str) => str == "1" || str == "0" ? str == "1" : bool.Parse(str);
             public static BE.Child ToChild(this string str) => new BE.Child(str.ToLong());
-            public static BE.Child GetChild(this DS.Dal_imp dal_imp,string id) => dal_imp.Child.GetListOfT().Find(cid=>cid==id.ToChild());
+            public static BE.Child GetChild(this DS.Dal_imp dal_imp,string id) => dal_imp.Child.GetListOfT.Find(cid=>cid==id.ToChild());
             public static BE.Nanny ToNanny(this string str) => new BE.Nanny(str.ToLong());
-            public static BE.Nanny GetNanny(this DS.Dal_imp dal_imp, string id) => dal_imp.Nanny.GetListOfT().Find(cid => cid == id.ToNanny());
+            public static BE.Nanny GetNanny(this DS.Dal_imp dal_imp, string id) => dal_imp.Nanny.GetListOfT.Find(cid => cid == id.ToNanny());
             public static BE.Contract ToContract(this string str) => new BE.Contract(str.ToLong());
-            public static BE.Contract GetContract(this DS.Dal_imp dal_imp, string id) => dal_imp.Contract.GetListOfT().Find(cid => cid == id.ToContract());
+            public static BE.Contract GetContract(this DS.Dal_imp dal_imp, string id) => dal_imp.Contract.GetListOfT.Find(cid => cid == id.ToContract());
             public static BE.Mother ToMother(this string str) => new BE.Mother(str.ToLong());
-            public static BE.Mother GetMother(this DS.Dal_imp dal_imp, string id) => dal_imp.Mother.GetListOfT().Find(cid => cid == id.ToMother());
+            public static BE.Mother GetMother(this DS.Dal_imp dal_imp, string id) => dal_imp.Mother.GetListOfT.Find(cid => cid == id.ToMother());
             public static BE.Mother GetMother(this DS.Dal_imp dal_imp, long id) => dal_imp.GetMother(id.ToString());
+            public static DateTime FromYYYYMMDD(this string str) => DateTime.ParseExact(str, "yyyyMMdd",
+                CultureInfo.InvariantCulture);
         }
     }
 }

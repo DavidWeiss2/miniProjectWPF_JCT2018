@@ -27,7 +27,7 @@
             /// The GetListOfT
             /// </summary>
             /// <returns>The <see cref="List{T}"/></returns>
-            List<T> GetListOfT();
+            List<T> GetListOfT {get; }
 
             /// <summary>
             /// The GetListofTByKeyField

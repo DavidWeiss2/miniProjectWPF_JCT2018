@@ -20,7 +20,7 @@ namespace dotNet5778_Project_5337_7178
                 {
                     dMother.Add(new BE.Mother(i + 50));
                     dChild.Add(new BE.Child(i, dateOfBirth: DateTime.Now, firstName: "f" + $"{(i + 50) % 100}", lastName: $"{i%4+1}", isFemale: i % 2 == 1, mother: new BE.Mother(i + 50), address: $"{100 - i}", isDisabled: i % 3 == 1, disableInfo: $"{i}"));
-                    (dChild.GetListOfT()).ForEach(j => Console.Write("{0}\n", j));
+                    (dChild.GetListOfT).ForEach(j => Console.Write("{0}\n", j));
                     Console.WriteLine("\n");
                     dChild.GetListofTByKeyField("LastName").ForEach(j => Console.Write("{0}\n", j));
                     Console.WriteLine("\n\n");
