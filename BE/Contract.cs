@@ -4,6 +4,8 @@
     {
         using System;
 
+        #region Classes
+
         /// <summary>
         /// Defines the <see cref="Contract" />
         /// </summary>
@@ -11,22 +13,24 @@
         {
             #region Fields
 
-            private double childID;
+            private long childID;
             private DateTime contractExpiredTime;
             private DateTime contractSignedTime;
             private bool isContractSigned;
             private bool isMotherAndNannyMets;
             private bool isWagePerHour;
-            private double motherID;
-            private double nannyID;
+            private long motherID;
+            private long nannyID;
             private double wagePerHour;
             private double wagePerMonth;
+            private bool[] isSearchingInDay = new bool[7];
+            private int[][] workingTimes = new int[7][];
 
             #endregion
 
             #region Properties
 
-            public double ChildID
+            public long ChildID
             {
                 get => this.childID; set => this.childID = value >= 100000000 && value < 1000000000 ? value : throw new ArgumentOutOfRangeException(nameof(this.ChildID));
             }
@@ -50,11 +54,11 @@
             {
                 get => this.isWagePerHour; set => this.isWagePerHour = value;
             }
-            public double MotherID
+            public long MotherID
             {
                 get => this.motherID; set => this.motherID = value >= 100000000 && value < 1000000000 ? value : throw new ArgumentOutOfRangeException(nameof(this.MotherID));
             }
-            public double NannyID
+            public long NannyID
             {
                 get => this.nannyID; set => this.nannyID = value >= 100000000 && value < 1000000000 ? value : throw new ArgumentOutOfRangeException(nameof(this.NannyID));
             }
@@ -66,37 +70,26 @@
             {
                 get => this.wagePerMonth; set => this.wagePerMonth = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(this.WagePerMonth));
             }
+            public bool[] IsSearchingInDay
+            {
+                get => this.isSearchingInDay;
+                set => this.isSearchingInDay = value;
+            }
+            public int[][] WorkingTimes
+            {
+                get => this.workingTimes;
+                set => this.workingTimes = value;
+            }
 
             #endregion
 
-            #region Methods
+            #region Constructors
 
-            /// <summary>
-            /// The Equals
-            /// </summary>
-            /// <param name="other">The <see cref="Contract"/></param>
-            /// <returns>The <see cref="bool"/></returns>
-            public bool Equals(Contract other) => other != null && this.ID == other.ID || this.NannyID == other.NannyID && this.ChildID == other.ChildID;
-
-            /// <summary>
-            /// The ToString
-            /// </summary>
-            /// <returns>The <see cref="string"/></returns>
-            public override string ToString() => $"Contract ID:{this.ID}, nanny ID:{this.NannyID}, child ID:{this.ChildID}, signed at:{this.ContractSignedTime}, deprecated:{this.ContractExpiredTime < DateTime.Now}";
-
-            #endregion
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Contract"/> class.
-            /// </summary>
-            /// <param name="nanny">The <see cref="Nanny"/></param>
-            /// <param name="mother">The <see cref="Mother"/></param>
-            /// <param name="child">The <see cref="Child"/></param>
-            /// <param name="isWagePerHour">The <see cref="bool"/></param>
-            /// <param name="MonthsUntilExpired">The <see cref="int"/></param>
-            /// <param name="isMotherAndNannyMets">The <see cref="bool"/></param>
-            /// <param name="isContractSigned">The <see cref="bool"/></param>
-            public Contract(long id,Nanny nanny, Mother mother, Child child, bool isWagePerHour, DateTime signedTime, DateTime expiredTime, bool isMotherAndNannyMets = false, bool isContractSigned = false) : base(id)
+            public Contract(long iD = 0) : base(iD)
+            {
+                ;
+            }
+            public Contract(long id, Nanny nanny, Mother mother, Child child, bool isWagePerHour, DateTime signedTime, DateTime expiredTime, bool[] isSearchingInDay, int[][] workingTimes, bool isMotherAndNannyMets = false, bool isContractSigned = false) : base(id)
             {
                 this.NannyID = nanny.ID;
                 this.MotherID = mother.ID;
@@ -110,14 +103,17 @@
                 this.ContractExpiredTime = expiredTime;
             }
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Contract"/> class.
-            /// </summary>
-            /// <param name="iD">The <see cref="long"/></param>
-            public Contract(long iD = 0) : base(iD)
-            {
-                ;
-            }
+            #endregion
+
+            #region Methods
+
+            public override string ToString() => $"Contract ID:{this.ID}, nanny ID:{this.NannyID}, child ID:{this.ChildID}, signed at:{this.ContractSignedTime}, deprecated:{this.ContractExpiredTime < DateTime.Now}";
+
+            bool IEquatable<Contract>.Equals(Contract other) => other != null && this.ID == other.ID || this.NannyID == other.NannyID && this.ChildID == other.ChildID;
+
+            #endregion
         }
+
+        #endregion
     }
 }

@@ -4,6 +4,8 @@
     {
         using System;
 
+        #region Classes
+
         /// <summary>
         /// Defines the <see cref="Nanny" />
         /// </summary>
@@ -11,6 +13,7 @@
         {
             #region Fields
 
+            private string bankInfo;
             private double experience;
             private int floor;
             private bool isAcceptingHourlyWage;
@@ -24,15 +27,36 @@
             private string recommendion;
             private double wagePerHour;
             private double wagePerMonth;
-            private double[,] workingTimes = new double[7, 2];
+            private int[,] workingTimes = new int[7, 2];
 
             #endregion
 
             #region Properties
 
+            public string BankInfo
+            {
+                get => this.bankInfo;
+                set => this.bankInfo = value;
+            }
             public double Experience
             {
                 get => this.experience; set => this.experience = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(this.Experience));
+            }
+            public int Floor
+            {
+                get => this.floor; set => this.floor = value;
+            }
+            public bool IsAcceptingHourlyWage
+            {
+                get => this.isAcceptingHourlyWage; set => this.isAcceptingHourlyWage = value;
+            }
+            public bool IsElevatorBuilding
+            {
+                get => this.isElevatorBuilding; set => this.isElevatorBuilding = value;
+            }
+            public bool IsVacationBasedOnTamat
+            {
+                get => this.isVacationBasedOnTamat; set => this.isVacationBasedOnTamat = value;
             }
             public bool[] IsWorkingInDay
             {
@@ -52,7 +76,7 @@
             }
             public string PhoneNumber
             {
-                get => this.phoneNumber; set => this.phoneNumber = value;
+                get => this.phoneNumber; set => this.phoneNumber = value ?? throw new ArgumentNullException(nameof(this.PhoneNumber));
             }
             public string Recommendion
             {
@@ -66,57 +90,20 @@
             {
                 get => this.wagePerMonth; set => this.wagePerMonth = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(this.WagePerMonth));
             }
-            public double[,] WorkingTimes
+            public int[,] WorkingTimes
             {
                 get => this.workingTimes; set => this.workingTimes = value;
-            }
-            public int Floor
-            {
-                get => this.floor;
-                set => this.floor = value;
-            }
-            public bool IsAcceptingHourlyWage
-            {
-                get => this.isAcceptingHourlyWage;
-                set => this.isAcceptingHourlyWage = value;
-            }
-            public bool IsElevatorBuilding
-            {
-                get => this.isElevatorBuilding;
-                set => this.isElevatorBuilding = value;
-            }
-            public bool IsVacationBasedOnTamat
-            {
-                get => this.isVacationBasedOnTamat;
-                set => this.isVacationBasedOnTamat = value;
             }
 
             #endregion
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Nanny"/> class.
-            /// </summary>
-            /// <param name="iD">The <see cref="int"/></param>
-            /// <param name="dateOfBirth">The <see cref="DateTime"/></param>
-            /// <param name="firstName">The <see cref="string"/></param>
-            /// <param name="lastName">The <see cref="string"/></param>
-            /// <param name="experience">The <see cref="double"/></param>
-            /// <param name="address">The <see cref="string"/></param>
-            /// <param name="phoneNumber">The <see cref="string"/></param>
-            /// <param name="workingTimes">The <see cref="double[,]"/></param>
-            /// <param name="isWorkingInDay">The <see cref="bool[]"/></param>
-            /// <param name="isAcceptingHourlyWage">The <see cref="bool"/></param>
-            /// <param name="isElevatorBuilding">The <see cref="bool"/></param>
-            /// <param name="isVacationBasedOnTamat">The <see cref="bool"/></param>
-            /// <param name="floor">The <see cref="int"/></param>
-            /// <param name="maxAgeApprovel">The <see cref="int"/></param>
-            /// <param name="maxNumOfChildrens">The <see cref="int"/></param>
-            /// <param name="minAgeApprovel">The <see cref="int"/></param>
-            /// <param name="recommendion">The <see cref="string"/></param>
-            /// <param name="wagePerHour">The <see cref="double"/></param>
-            /// <param name="wagePerMonth">The <see cref="double"/></param>
-            /// <param name="isFemale">The <see cref="bool"/></param>
-            public Nanny(long iD, DateTime dateOfBirth, string firstName, string lastName, double experience, string address, string phoneNumber, double[,] workingTimes, bool[] isWorkingInDay, bool isAcceptingHourlyWage = false, bool isElevatorBuilding = true, bool isVacationBasedOnTamat = true, int floor = 0, int maxAgeApprovel = 36, int maxNumOfChildrens = 6, int minAgeApprovel = 3, string recommendion = "", double wagePerHour = 25, double wagePerMonth = 5000, bool isFemale = true) : base(iD, dateOfBirth, firstName, lastName, isFemale, address)
+            #region Constructors
+
+            public Nanny(long iD = 0) : base(iD)
+            {
+                ;
+            }
+            public Nanny(long iD, DateTime dateOfBirth, string firstName, string lastName, double experience, string address, string phoneNumber, int[,] workingTimes, bool[] isWorkingInDay, string bankInfo, bool isAcceptingHourlyWage = false, bool isElevatorBuilding = true, bool isVacationBasedOnTamat = true, int floor = 0, int maxAgeApprovel = 36, int maxNumOfChildrens = 6, int minAgeApprovel = 3, string recommendion = "", double wagePerHour = 25, double wagePerMonth = 5000, bool isFemale = true) : base(iD, dateOfBirth, firstName, lastName, isFemale, address)
             {
                 this.Experience = experience;
                 this.Floor = floor;
@@ -132,16 +119,12 @@
                 this.IsWorkingInDay = isWorkingInDay;
                 this.WorkingTimes = workingTimes;
                 this.PhoneNumber = phoneNumber;
+                this.BankInfo = bankInfo;
             }
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Nanny"/> class.
-            /// </summary>
-            /// <param name="iD">The <see cref="long"/></param>
-            public Nanny(long iD = 0) : base(iD)
-            {
-                ;
-            }
+            #endregion
         }
+
+        #endregion
     }
 }

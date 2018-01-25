@@ -4,6 +4,8 @@
     {
         using System;
 
+        #region Classes
+
         /// <summary>
         /// Defines the <see cref="Human" />
         /// </summary>
@@ -44,26 +46,13 @@
 
             #endregion
 
-            #region Methods
+            #region Constructors
 
-            /// <summary>
-            /// The ToString
-            /// </summary>
-            /// <returns>The <see cref="string"/></returns>
-            public override string ToString() => $"Type:{this.GetType().Name} ID:{this.ID}, first name:{this.FirstName}, last name:{this.LastName}, address:{this.Address}.";
-
-            #endregion
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Human"/> class.
-            /// </summary>
-            /// <param name="iD">The <see cref="int"/></param>
-            /// <param name="dateOfBirth">The <see cref="DateTime"/></param>
-            /// <param name="firstName">The <see cref="string"/></param>
-            /// <param name="lastName">The <see cref="string"/></param>
-            /// <param name="isFemale">The <see cref="bool"/></param>
-            /// <param name="address">The <see cref="string"/></param>
-            /// <param name="phoneNumber">The <see cref="string"/></param>
+            public Human(long iD = 0) : base(iD)
+            {
+                if (!(iD >= 0 && iD < 1000000000))
+                    throw new ArgumentOutOfRangeException(nameof(this.ID));
+            }
             public Human(long iD, DateTime dateOfBirth, string firstName, string lastName, bool isFemale, string address) : base(iD)
             {
                 this.Address = address;
@@ -75,15 +64,15 @@
                     throw new ArgumentOutOfRangeException(nameof(this.ID));
             }
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Human"/> class.
-            /// </summary>
-            /// <param name="iD">The <see cref="long"/></param>
-            public Human(long iD = 0) : base(iD)
-            {
-                if (!(iD >= 0 && iD < 1000000000))
-                    throw new ArgumentOutOfRangeException(nameof(this.ID));
-            }
+            #endregion
+
+            #region Methods
+
+            public override string ToString() => $"Type:{this.GetType().Name} ID:{this.ID}, first name:{this.FirstName}, last name:{this.LastName}, address:{this.Address}.";
+
+            #endregion
         }
+
+        #endregion
     }
 }

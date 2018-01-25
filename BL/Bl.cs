@@ -3,17 +3,79 @@
     namespace BL
     {
         using System;
+        using System.Collections.Generic;
         using System.Globalization;
+
+        #region Classes
+
+        /// <summary>
+        /// Defines the <see cref="Parsers" />
+        /// </summary>
+        internal static class Parsers
+        {
+            #region Methods
+
+            public static DateTime FromYYYYMMDD(this string str) => DateTime.ParseExact(str, "yyyyMMdd",
+                CultureInfo.InvariantCulture);
+
+            public static BE.Child GetChild(this DS.Dal_imp dal_imp, string id) => dal_imp.Child.GetListOfT.Find(cid => cid == id.ToChild());
+
+            public static BE.Contract GetContract(this DS.Dal_imp dal_imp, string id) => dal_imp.Contract.GetListOfT.Find(cid => cid == id.ToContract());
+
+            public static BE.Mother GetMother(this DS.Dal_imp dal_imp, long id) => dal_imp.GetMother(id.ToString());
+
+            public static BE.Mother GetMother(this DS.Dal_imp dal_imp, string id) => dal_imp.Mother.GetListOfT.Find(cid => cid == id.ToMother());
+
+            public static BE.Nanny GetNanny(this DS.Dal_imp dal_imp, string id) => dal_imp.Nanny.GetListOfT.Find(cid => cid == id.ToNanny());
+
+            public static Tuple<bool[], int[][]> ParseWeekSched(this string str)
+            {
+                string[] weekHolder = str.Split(';');
+                if (weekHolder.Length != 7)
+                    throw new FormatException($"Week have excecly 7 days thrown by: {nameof(ParseWeekSched)}.");
+                List<bool> workingDays = new List<bool>(7);
+                List<int[]> workingHours = new List<int[]>(7);
+                for (int i = 0; i < 7; i++)
+                {
+                    string dayHolder = weekHolder[i];
+                    foreach (char c in dayHolder)
+                    {
+                        "0123456789.".IndexOf(c);
+                    }
+                    string[] dayTimeHolder = dayHolder.Split('.');
+                }
+                return Tuple.Create(workingDays.ToArray(), workingHours.ToArray());
+            }
+
+            public static bool ToBool(this string str) => str == "1" || str == "0" ? str == "1" : bool.Parse(str);
+
+            public static BE.Child ToChild(this string str) => new BE.Child(str.ToLong());
+
+            public static BE.Contract ToContract(this string str) => new BE.Contract(str.ToLong());
+
+            public static int ToInt(this string str) => int.Parse(str);
+
+            public static long ToLong(this string str) => long.Parse(str);
+
+            public static BE.Mother ToMother(this string str) => new BE.Mother(str.ToLong());
+
+            public static BE.Nanny ToNanny(this string str) => new BE.Nanny(str.ToLong());
+
+            #endregion
+        }
 
         /// <summary>
         /// Defines the <see cref="Bl" />
         /// </summary>
         public class Bl
         {
-            DS.Dal_imp dal_Imp = new DS.Dal_imp();
+            #region Fields
+            private DS.Dal_imp dal_Imp = new DS.Dal_imp();
+            #endregion
+
             #region Methods
 
-            string AddChild(string id, string monthsOld, string firstName, string lastName, string isFemale, string idMother, string isDisabled, string disableInfo)
+            private string AddChild(string id, string monthsOld, string firstName, string lastName, string isFemale, string idMother, string isDisabled, string disableInfo)
             {
                 string errorBuffer = "";
                 if (!InRange(id, 0, 999999999, false))
@@ -30,7 +92,7 @@
                 {
                     try
                     {
-                        BE.Mother mother= this.dal_Imp.GetMother(idMother);
+                        BE.Mother mother = this.dal_Imp.GetMother(idMother);
                         this.dal_Imp.Child.Add(new BE.Child(id.ToLong(), DateTime.Now.AddMonths(monthsOld.ToInt()), firstName, lastName, isFemale.ToBool(), mother, mother.Address, isDisabled.ToBool(), disableInfo));
                     }
                     catch (Exception e)
@@ -42,13 +104,8 @@
                 return errorBuffer;
             }
 
-
-            string AddContract(string idNanny, string idChild, string isSigned, string sallery, string perHourBool, string dateFrom,
-                string dateUntil, string day1, string dayTimeFrom1, string dayTimeUntil1, string day2, string dayTimeFrom2, string dayTimeUntil2,
-                string day3, string dayTimeFrom3, string dayTimeUntil3, string day4, string dayTimeFrom4,
-                string dayTimeUntil4, string day5, string dayTimeFrom5, string dayTimeUntil5, string day6,
-                string dayTimeFrom6, string dayTimeUntil6, string day7, string dayTimeFrom7,
-                string dayTimeUntil7)
+            private string AddContract(string idNanny, string idChild, string isSigned, string sallery, string perHourBool, string dateFrom,
+                string dateUntil, string isMets, string weekSched)
             {
                 string errorBuffer = "";
                 if (!InRange(idNanny, 0, 999999999, false))
@@ -59,24 +116,8 @@
                     Append(ref errorBuffer, "Invalid Sallery");
                 if (!InRange(perHourBool, 0, 1, true))
                     Append(ref errorBuffer, "Invalid is 'Per Hour'");
-
                 if (!DateFromUntilValidation(dateFrom, dateUntil))
                     Append(ref errorBuffer, "Date Range Invalid!"); //Must be valid YYYYMMDD
-
-                if (!TimeFromUntilValidation(day1, dayTimeFrom1, dayTimeUntil1))
-                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!TimeFromUntilValidation(day2, dayTimeFrom2, dayTimeUntil2))
-                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!TimeFromUntilValidation(day3, dayTimeFrom3, dayTimeUntil3))
-                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!TimeFromUntilValidation(day4, dayTimeFrom4, dayTimeUntil4))
-                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!TimeFromUntilValidation(day5, dayTimeFrom5, dayTimeUntil5))
-                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!TimeFromUntilValidation(day6, dayTimeFrom6, dayTimeUntil6))
-                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!TimeFromUntilValidation(day7, dayTimeFrom7, dayTimeUntil7))
-                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
 
                 if (errorBuffer == "") //Success befor trying to add
                 {
@@ -85,18 +126,19 @@
                         BE.Nanny nanny = this.dal_Imp.GetNanny(idNanny);
                         BE.Child child = this.dal_Imp.GetChild(idChild);
                         BE.Mother mother = this.dal_Imp.GetMother(child.MotherID);
-                        this.dal_Imp.Contract.Add(new BE.Contract(this.dal_Imp.Contract.MaxID+1,nanny,mother,child,perHourBool.ToBool(),dateFrom.FromYYYYMMDD(),dateUntil.FromYYYYMMDD(),);
+                        bool[] isSearchingInDay = new bool[7];
+                        int[][] workingTimes = new int[7][];
+                        this.dal_Imp.Contract.Add(new BE.Contract(this.dal_Imp.Contract.MaxID + 1, nanny, mother, child, perHourBool.ToBool(), dateFrom.FromYYYYMMDD(), dateUntil.FromYYYYMMDD(), isSearchingInDay, workingTimes, isMets.ToBool(), isSigned.ToBool()));
                     }
-                    catch (Exception ex)
+                    catch (Exception e)
                     {
-
-                        throw;
+                        Append(ref errorBuffer, e.Message);
                     }
                 }
                 return errorBuffer;
             }
 
-            string AddMother(string id, string familyName, string firstName, string cellPhone, string phone, string street,
+            private string AddMother(string id, string familyName, string firstName, string cellPhone, string phone, string street,
                 string streetNumber, string city, string day1, string day2, string day3, string day4, string day5,
                 string day6, string day7, string dayTimeFrom1, string dayTimeUntil1, string dayTimeFrom2,
                 string dayTimeUntil2, string dayTimeFrom3, string dayTimeUntil3, string dayTimeFrom4, string dayTimeUntil4,
@@ -150,9 +192,9 @@
 
                 return errorBuffer;
             }
-            
+
             /// <returns>The <see cref="string"/></returns>
-            string AddNanny(string id, string familyName, string firstName, string birthDate, string phone, string street,
+            private string AddNanny(string id, string familyName, string firstName, string birthDate, string phone, string street,
             string streetNumber, string city, string hasElevator, string experianceYears,
             string maxChildren, string minAge, string maxAge, string hourRate, string perHourRate, string monthRate,
             string vicationDays, string recommandations, string bankISBN, string day1, string day2, string day3, string day4, string day5,
@@ -233,7 +275,7 @@
             /// </summary>
             /// <param name="text">The <see cref="string"/></param>
             /// <param name="addText">The <see cref="string"/></param>
-            void Append(ref string text, string addText)
+            private void Append(ref string text, string addText)
             {
                 if (text != "")
                     text += "\n";
@@ -246,7 +288,7 @@
             /// <param name="dFrom">The <see cref="string"/></param>
             /// <param name="dUntil">The <see cref="string"/></param>
             /// <returns>The <see cref="bool"/></returns>
-            bool DateFromUntilValidation(string dFrom, string dUntil)
+            private bool DateFromUntilValidation(string dFrom, string dUntil)
             {
                 if (!ValidateDate(dFrom) || !ValidateDate(dUntil))
                     return false; //Make sure dates are valid
@@ -262,7 +304,7 @@
             /// <param name="nannyId">The <see cref="string"/></param>
             /// <param name="motherId">The <see cref="string"/></param>
             /// <returns>The <see cref="string"/></returns>
-            string GetDistance(string nannyId, string motherId)
+            private string GetDistance(string nannyId, string motherId)
             {
                 string outputBuffer = "";
                 if (!InRange(nannyId, 0, 999999999, false))
@@ -288,7 +330,7 @@
             /// <param name="max">The <see cref="int"/></param>
             /// <param name="charLen">The <see cref="bool"/></param>
             /// <returns>The <see cref="bool"/></returns>
-            bool InRange(string data, int min, int max, bool charLen = false)
+            private bool InRange(string data, int min, int max, bool charLen = false)
             {
                 int value = 0;
                 if (!charLen && !int.TryParse(data, out value))
@@ -304,7 +346,7 @@
             /// <param name="tFrom">The <see cref="string"/></param>
             /// <param name="tUntil">The <see cref="string"/></param>
             /// <returns>The <see cref="bool"/></returns>
-            bool TimeFromUntilValidation(string dayBool, string tFrom, string tUntil)
+            private bool TimeFromUntilValidation(string dayBool, string tFrom, string tUntil)
             {
                 if (!InRange(dayBool, 0, 1))
                     return false;
@@ -348,25 +390,10 @@
                     return false;
                 return true;
             }
+
             #endregion
         }
 
-        internal static class Parsers
-        {
-            public static int ToInt(this string str) => int.Parse(str);
-            public static long ToLong(this string str) => long.Parse(str);
-            public static bool ToBool(this string str) => str == "1" || str == "0" ? str == "1" : bool.Parse(str);
-            public static BE.Child ToChild(this string str) => new BE.Child(str.ToLong());
-            public static BE.Child GetChild(this DS.Dal_imp dal_imp,string id) => dal_imp.Child.GetListOfT.Find(cid=>cid==id.ToChild());
-            public static BE.Nanny ToNanny(this string str) => new BE.Nanny(str.ToLong());
-            public static BE.Nanny GetNanny(this DS.Dal_imp dal_imp, string id) => dal_imp.Nanny.GetListOfT.Find(cid => cid == id.ToNanny());
-            public static BE.Contract ToContract(this string str) => new BE.Contract(str.ToLong());
-            public static BE.Contract GetContract(this DS.Dal_imp dal_imp, string id) => dal_imp.Contract.GetListOfT.Find(cid => cid == id.ToContract());
-            public static BE.Mother ToMother(this string str) => new BE.Mother(str.ToLong());
-            public static BE.Mother GetMother(this DS.Dal_imp dal_imp, string id) => dal_imp.Mother.GetListOfT.Find(cid => cid == id.ToMother());
-            public static BE.Mother GetMother(this DS.Dal_imp dal_imp, long id) => dal_imp.GetMother(id.ToString());
-            public static DateTime FromYYYYMMDD(this string str) => DateTime.ParseExact(str, "yyyyMMdd",
-                CultureInfo.InvariantCulture);
-        }
+        #endregion
     }
 }

@@ -4,6 +4,8 @@
     {
         using System;
 
+        #region Classes
+
         /// <summary>
         /// Defines the <see cref="Child" />
         /// </summary>
@@ -13,10 +15,10 @@
 
             private string disableInfo;
             private bool isDisabled;
-            long motherID;
+            private long motherID;
 
             #endregion
-            
+
             #region Properties
 
             public string DisableInfo
@@ -34,19 +36,12 @@
 
             #endregion
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Child"/> class.
-            /// </summary>
-            /// <param name="iD">The <see cref="int"/></param>
-            /// <param name="dateOfBirth">The <see cref="DateTime"/></param>
-            /// <param name="firstName">The <see cref="string"/></param>
-            /// <param name="lastName">The <see cref="string"/></param>
-            /// <param name="isFemale">The <see cref="bool"/></param>
-            /// <param name="mother">The <see cref="Mother"/></param>
-            /// <param name="address">The <see cref="string"/></param>
-            /// <param name="isDisabled">The <see cref="bool"/></param>
-            /// <param name="disableInfo">The <see cref="string"/></param>
-            /// <param name="phoneNumber">The <see cref="string"/></param>
+            #region Constructors
+
+            public Child(long iD = 0) : base(iD)
+            {
+                ;
+            }
             public Child(long iD, DateTime dateOfBirth, string firstName, string lastName, bool isFemale, Mother mother, string address, bool isDisabled = false, string disableInfo = "") : base(iD, dateOfBirth, firstName, lastName, isFemale, address)
             {
                 this.MotherID = mother.ID;
@@ -54,14 +49,9 @@
                 this.DisableInfo = disableInfo;
             }
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Child"/> class.
-            /// </summary>
-            /// <param name="iD">The <see cref="int"/></param>
-            public Child(long iD =0) : base(iD)
-            {
-                ;
-            }
+            #endregion
         }
+
+        #endregion
     }
 }
