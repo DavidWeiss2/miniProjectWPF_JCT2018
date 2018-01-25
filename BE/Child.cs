@@ -13,7 +13,7 @@
 
             private string disableInfo;
             private bool isDisabled;
-            double motherID;
+            long motherID;
 
             #endregion
             
@@ -27,7 +27,7 @@
             {
                 get => this.isDisabled; set => this.isDisabled = value;
             }
-            public double MotherID
+            public long MotherID
             {
                 get => this.motherID; set => this.motherID = value >= 0 && value < 1000000000 ? value : throw new ArgumentOutOfRangeException(nameof(this.MotherID));
             }

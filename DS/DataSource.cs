@@ -110,7 +110,7 @@
                 /// <returns>The <see cref="List{Child}"/></returns>
                 public List<Child> GetListofTByKeyField(string keyField)
                 {
-                    var codeGetter = CreateGetter(DataSource.childList.Last().GetType, keyField);// using the 1st element as an example
+                    Func<object,object> codeGetter = CreateGetter(DataSource.childList.Last().GetType, keyField);// using the 1st element as an example
                     return GetListOfT().OrderBy(o => codeGetter(o)).ToList();
                 }
 
@@ -171,7 +171,7 @@
                 /// <returns>The <see cref="List{Mother}"/></returns>
                 public List<Mother> GetListofTByKeyField(string keyField)
                 {
-                    var codeGetter = CreateGetter(DataSource.motherList.Last().GetType, keyField);// using the 1st element as an example
+                    Func<object, object> codeGetter = CreateGetter(DataSource.motherList.Last().GetType, keyField);// using the 1st element as an example
                     return GetListOfT().OrderBy(o => codeGetter(o)).ToList();
                 }
 
@@ -232,7 +232,7 @@
                 /// <returns>The <see cref="List{Contract}"/></returns>
                 public List<Contract> GetListofTByKeyField(string keyField)
                 {
-                    var codeGetter = CreateGetter(DataSource.contractList.Last().GetType, keyField);// using the 1st element as an example
+                    Func<object, object> codeGetter = CreateGetter(DataSource.contractList.Last().GetType, keyField);// using the 1st element as an example
                     return GetListOfT().OrderBy(o => codeGetter(o)).ToList();
                 }
 
@@ -293,7 +293,7 @@
                 /// <returns>The <see cref="List{Nanny}"/></returns>
                 public List<Nanny> GetListofTByKeyField(string keyField)
                 {
-                    var codeGetter = CreateGetter(DataSource.nannyList.Last().GetType, keyField);// using the 1st element as an example
+                    Func<object, object> codeGetter = CreateGetter(DataSource.nannyList.Last().GetType, keyField);// using the 1st element as an example
                     return GetListOfT().OrderBy(o => codeGetter(o)).ToList();
                 }
 

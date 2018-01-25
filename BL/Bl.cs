@@ -12,160 +12,90 @@
             DS.Dal_imp dal_Imp = new DS.Dal_imp();
             #region Methods
 
-            /// <summary>
-            /// The addChild
-            /// </summary>
-            /// <param name="id">The <see cref="string"/></param>
-            /// <param name="idMother">The <see cref="string"/></param>
-            /// <param name="monthsOld">The <see cref="string"/></param>
-            /// <param name="isDisabled">The <see cref="string"/></param>
-            /// <returns>The <see cref="string"/></returns>
-            string addChild(string id, string idMother, string monthsOld, string isDisabled, string firstName, string lastName, string isFemale, string disableInfo)
+            string AddChild(string id, string monthsOld, string firstName, string lastName, string isFemale, string idMother, string isDisabled, string disableInfo)
             {
                 string errorBuffer = "";
-                if (!inRange(id, 0, 999999999, false))
-                    append(ref errorBuffer, "Invalid ID");
-                if (!inRange(idMother, 0, 999999999, false))
-                    append(ref errorBuffer, "Invalid Mother ID");
+                if (!InRange(id, 0, 999999999, false))
+                    Append(ref errorBuffer, "Invalid ID");
+                if (!InRange(idMother, 0, 999999999, false))
+                    Append(ref errorBuffer, "Invalid Mother ID");
 
-                if (!inRange(monthsOld, 0, 216))
-                    append(ref errorBuffer, "Invalid Months Old");
-                if (!inRange(isDisabled, 0, 1, true))
-                    append(ref errorBuffer, "Invalid 'has special needs'");
+                if (!InRange(monthsOld, 0, 216))
+                    Append(ref errorBuffer, "Invalid Months Old");
+                if (!InRange(isDisabled, 0, 1, true))
+                    Append(ref errorBuffer, "Invalid 'has special needs'");
 
                 if (errorBuffer == "") //Success befor trying to add
                 {
                     try
                     {
-                        BE.Mother mother= dal_Imp.Mother.GetListOfT().Find(i => i == new BE.Mother(long.Parse(idMother)));
-                        dal_Imp.Child.Add(new BE.Child(long.Parse(id), DateTime.Now.AddMonths(-Int16.Parse(monthsOld)), firstName, lastName, isFemale=="1", mother, mother.Address, isDisabled == "1", disableInfo));
+                        BE.Mother mother= this.dal_Imp.GetMother(idMother);
+                        this.dal_Imp.Child.Add(new BE.Child(id.ToLong(), DateTime.Now.AddMonths(monthsOld.ToInt()), firstName, lastName, isFemale.ToBool(), mother, mother.Address, isDisabled.ToBool(), disableInfo));
                     }
                     catch (Exception e)
                     {
-                        append(ref errorBuffer, e.Message);
+                        Append(ref errorBuffer, e.Message);
                     }
                 }
 
                 return errorBuffer;
             }
 
-            /// <summary>
-            /// The addContract
-            /// </summary>
-            /// <param name="id">The <see cref="string"/></param>
-            /// <param name="idNanny">The <see cref="string"/></param>
-            /// <param name="idChild">The <see cref="string"/></param>
-            /// <param name="isSigned">The <see cref="string"/></param>
-            /// <param name="sallery">The <see cref="string"/></param>
-            /// <param name="perHourBool">The <see cref="string"/></param>
-            /// <param name="dateFrom">The <see cref="string"/></param>
-            /// <param name="dateUntil">The <see cref="string"/></param>
-            /// <param name="day1">The <see cref="string"/></param>
-            /// <param name="day2">The <see cref="string"/></param>
-            /// <param name="day3">The <see cref="string"/></param>
-            /// <param name="day4">The <see cref="string"/></param>
-            /// <param name="day5">The <see cref="string"/></param>
-            /// <param name="day6">The <see cref="string"/></param>
-            /// <param name="day7">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom1">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil1">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom2">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil2">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom3">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil3">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom4">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil4">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom5">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil5">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom6">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil6">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom7">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil7">The <see cref="string"/></param>
-            /// <returns>The <see cref="string"/></returns>
-            string addContract(string id, string idNanny, string idChild, string isSigned, string sallery, string perHourBool,
-               string dateFrom, string dateUntil, string day1, string day2, string day3, string day4, string day5,
-               string day6, string day7, string dayTimeFrom1, string dayTimeUntil1, string dayTimeFrom2,
-               string dayTimeUntil2, string dayTimeFrom3, string dayTimeUntil3, string dayTimeFrom4, string dayTimeUntil4,
-               string dayTimeFrom5, string dayTimeUntil5, string dayTimeFrom6, string dayTimeUntil6,
-               string dayTimeFrom7, string dayTimeUntil7)
+
+            string AddContract(string idNanny, string idChild, string isSigned, string sallery, string perHourBool, string dateFrom,
+                string dateUntil, string day1, string dayTimeFrom1, string dayTimeUntil1, string day2, string dayTimeFrom2, string dayTimeUntil2,
+                string day3, string dayTimeFrom3, string dayTimeUntil3, string day4, string dayTimeFrom4,
+                string dayTimeUntil4, string day5, string dayTimeFrom5, string dayTimeUntil5, string day6,
+                string dayTimeFrom6, string dayTimeUntil6, string day7, string dayTimeFrom7,
+                string dayTimeUntil7)
             {
                 string errorBuffer = "";
-                if (!inRange(id, 0, 999999999, false))
-                    append(ref errorBuffer, "Invalid Nanny ID");
-                if (!inRange(idNanny, 0, 999999999, false))
-                    append(ref errorBuffer, "Invalid Nanny ID");
-                if (!inRange(idChild, 0, 999999999, false))
-                    append(ref errorBuffer, "Invalid Child ID");
-                if (!inRange(sallery, 0, 10000000))
-                    append(ref errorBuffer, "Invalid Sallery");
-                if (!inRange(perHourBool, 0, 1, true))
-                    append(ref errorBuffer, "Invalid is 'Per Hour'");
+                if (!InRange(idNanny, 0, 999999999, false))
+                    Append(ref errorBuffer, "Invalid Nanny ID");
+                if (!InRange(idChild, 0, 999999999, false))
+                    Append(ref errorBuffer, "Invalid Child ID");
+                if (!InRange(sallery, 0, 10000000))
+                    Append(ref errorBuffer, "Invalid Sallery");
+                if (!InRange(perHourBool, 0, 1, true))
+                    Append(ref errorBuffer, "Invalid is 'Per Hour'");
 
                 if (!DateFromUntilValidation(dateFrom, dateUntil))
-                    append(ref errorBuffer, "Date Range Invalid!"); //Must be valid YYYYMMDD
+                    Append(ref errorBuffer, "Date Range Invalid!"); //Must be valid YYYYMMDD
 
-                if (!timeFromUntilValidation(day1, dayTimeFrom1, dayTimeUntil1))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day2, dayTimeFrom2, dayTimeUntil2))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day3, dayTimeFrom3, dayTimeUntil3))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day4, dayTimeFrom4, dayTimeUntil4))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day5, dayTimeFrom5, dayTimeUntil5))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day6, dayTimeFrom6, dayTimeUntil6))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day7, dayTimeFrom7, dayTimeUntil7))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day1, dayTimeFrom1, dayTimeUntil1))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day2, dayTimeFrom2, dayTimeUntil2))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day3, dayTimeFrom3, dayTimeUntil3))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day4, dayTimeFrom4, dayTimeUntil4))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day5, dayTimeFrom5, dayTimeUntil5))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day6, dayTimeFrom6, dayTimeUntil6))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day7, dayTimeFrom7, dayTimeUntil7))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
 
                 if (errorBuffer == "") //Success befor trying to add
                 {
-                    //TRY:
-                    //// pack up shit for add function
+                    try
+                    {
+                        BE.Nanny nanny = this.dal_Imp.GetNanny(idNanny);
+                        BE.Child child = this.dal_Imp.GetChild(idChild);
+                        BE.Mother mother = this.dal_Imp.GetMother(child.MotherID);
+                        this.dal_Imp.Contract.Add(new BE.Contract(nanny,mother,child,perHourBool.ToBool(),MonthsUntilExpired);
+                    }
+                    catch (Exception ex)
+                    {
 
-                    //// call Add function
-
-                    //Catch Error:
-                    //// errorBuffer = "error details";
+                        throw;
+                    }
                 }
                 return errorBuffer;
             }
 
-            /// <summary>
-            /// The addMother
-            /// </summary>
-            /// <param name="id">The <see cref="string"/></param>
-            /// <param name="familyName">The <see cref="string"/></param>
-            /// <param name="firstName">The <see cref="string"/></param>
-            /// <param name="cellPhone">The <see cref="string"/></param>
-            /// <param name="phone">The <see cref="string"/></param>
-            /// <param name="street">The <see cref="string"/></param>
-            /// <param name="streetNumber">The <see cref="string"/></param>
-            /// <param name="city">The <see cref="string"/></param>
-            /// <param name="day1">The <see cref="string"/></param>
-            /// <param name="day2">The <see cref="string"/></param>
-            /// <param name="day3">The <see cref="string"/></param>
-            /// <param name="day4">The <see cref="string"/></param>
-            /// <param name="day5">The <see cref="string"/></param>
-            /// <param name="day6">The <see cref="string"/></param>
-            /// <param name="day7">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom1">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil1">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom2">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil2">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom3">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil3">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom4">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil4">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom5">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil5">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom6">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil6">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom7">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil7">The <see cref="string"/></param>
-            /// <returns>The <see cref="string"/></returns>
-            string addMother(string id, string familyName, string firstName, string cellPhone, string phone, string street,
+            string AddMother(string id, string familyName, string firstName, string cellPhone, string phone, string street,
                 string streetNumber, string city, string day1, string day2, string day3, string day4, string day5,
                 string day6, string day7, string dayTimeFrom1, string dayTimeUntil1, string dayTimeFrom2,
                 string dayTimeUntil2, string dayTimeFrom3, string dayTimeUntil3, string dayTimeFrom4, string dayTimeUntil4,
@@ -173,37 +103,37 @@
                 string dayTimeFrom7, string dayTimeUntil7)
             {
                 string errorBuffer = "";
-                if (!inRange(id, 0, 999999999, false))
-                    append(ref errorBuffer, "Invalid ID");
-                if (!inRange(familyName, 1, 100, true))
-                    append(ref errorBuffer, "Invalid First Name");
-                if (!inRange(firstName, 1, 100, true))
-                    append(ref errorBuffer, "Invalid Family Name");
-                if (!inRange(cellPhone, 1, 20, true))
-                    append(ref errorBuffer, "Invalid Cell Phone Number");
-                if (!inRange(phone, 1, 20, true))
-                    append(ref errorBuffer, "Invalid phone Number");
-                if (!inRange(street, 1, 100, true))
-                    append(ref errorBuffer, "Invalid street name");
-                if (!inRange(streetNumber, 1, 10, true))
-                    append(ref errorBuffer, "Invalid street number");
-                if (!inRange(city, 1, 100, true))
-                    append(ref errorBuffer, "Invalid city");
+                if (!InRange(id, 0, 999999999, false))
+                    Append(ref errorBuffer, "Invalid ID");
+                if (!InRange(familyName, 1, 100, true))
+                    Append(ref errorBuffer, "Invalid First Name");
+                if (!InRange(firstName, 1, 100, true))
+                    Append(ref errorBuffer, "Invalid Family Name");
+                if (!InRange(cellPhone, 1, 20, true))
+                    Append(ref errorBuffer, "Invalid Cell Phone Number");
+                if (!InRange(phone, 1, 20, true))
+                    Append(ref errorBuffer, "Invalid phone Number");
+                if (!InRange(street, 1, 100, true))
+                    Append(ref errorBuffer, "Invalid street name");
+                if (!InRange(streetNumber, 1, 10, true))
+                    Append(ref errorBuffer, "Invalid street number");
+                if (!InRange(city, 1, 100, true))
+                    Append(ref errorBuffer, "Invalid city");
 
-                if (!timeFromUntilValidation(day1, dayTimeFrom1, dayTimeUntil1))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day2, dayTimeFrom2, dayTimeUntil2))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day3, dayTimeFrom3, dayTimeUntil3))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day4, dayTimeFrom4, dayTimeUntil4))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day5, dayTimeFrom5, dayTimeUntil5))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day6, dayTimeFrom6, dayTimeUntil6))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day7, dayTimeFrom7, dayTimeUntil7))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day1, dayTimeFrom1, dayTimeUntil1))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day2, dayTimeFrom2, dayTimeUntil2))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day3, dayTimeFrom3, dayTimeUntil3))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day4, dayTimeFrom4, dayTimeUntil4))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day5, dayTimeFrom5, dayTimeUntil5))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day6, dayTimeFrom6, dayTimeUntil6))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day7, dayTimeFrom7, dayTimeUntil7))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
 
 
                 if (errorBuffer == "") //Success befor trying to add
@@ -219,52 +149,9 @@
 
                 return errorBuffer;
             }
-
-            /// <summary>
-            /// The addNanny
-            /// </summary>
-            /// <param name="id">The <see cref="string"/></param>
-            /// <param name="familyName">The <see cref="string"/></param>
-            /// <param name="firstName">The <see cref="string"/></param>
-            /// <param name="birthDate">The <see cref="string"/></param>
-            /// <param name="phone">The <see cref="string"/></param>
-            /// <param name="street">The <see cref="string"/></param>
-            /// <param name="streetNumber">The <see cref="string"/></param>
-            /// <param name="city">The <see cref="string"/></param>
-            /// <param name="hasElevator">The <see cref="string"/></param>
-            /// <param name="experianceYears">The <see cref="string"/></param>
-            /// <param name="maxChildren">The <see cref="string"/></param>
-            /// <param name="minAge">The <see cref="string"/></param>
-            /// <param name="maxAge">The <see cref="string"/></param>
-            /// <param name="hourRate">The <see cref="string"/></param>
-            /// <param name="perHourRate">The <see cref="string"/></param>
-            /// <param name="monthRate">The <see cref="string"/></param>
-            /// <param name="vicationDays">The <see cref="string"/></param>
-            /// <param name="recommandations">The <see cref="string"/></param>
-            /// <param name="bankISBN">The <see cref="string"/></param>
-            /// <param name="day1">The <see cref="string"/></param>
-            /// <param name="day2">The <see cref="string"/></param>
-            /// <param name="day3">The <see cref="string"/></param>
-            /// <param name="day4">The <see cref="string"/></param>
-            /// <param name="day5">The <see cref="string"/></param>
-            /// <param name="day6">The <see cref="string"/></param>
-            /// <param name="day7">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom1">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil1">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom2">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil2">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom3">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil3">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom4">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil4">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom5">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil5">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom6">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil6">The <see cref="string"/></param>
-            /// <param name="dayTimeFrom7">The <see cref="string"/></param>
-            /// <param name="dayTimeUntil7">The <see cref="string"/></param>
+            
             /// <returns>The <see cref="string"/></returns>
-            string addNanny(string id, string familyName, string firstName, string birthDate, string phone, string street,
+            string AddNanny(string id, string familyName, string firstName, string birthDate, string phone, string street,
             string streetNumber, string city, string hasElevator, string experianceYears,
             string maxChildren, string minAge, string maxAge, string hourRate, string perHourRate, string monthRate,
             string vicationDays, string recommandations, string bankISBN, string day1, string day2, string day3, string day4, string day5,
@@ -274,56 +161,56 @@
             string dayTimeFrom7, string dayTimeUntil7)
             {
                 string errorBuffer = "";
-                if (!inRange(id, 0, 999999999, false))
-                    append(ref errorBuffer, "Invalid ID");
-                if (!inRange(familyName, 1, 100, true))
-                    append(ref errorBuffer, "Invalid First Name");
-                if (!inRange(firstName, 1, 100, true))
-                    append(ref errorBuffer, "Invalid Family Name");
-                if (!inRange(phone, 1, 20, true))
-                    append(ref errorBuffer, "Invalid phone Number");
-                if (!inRange(street, 1, 100, true))
-                    append(ref errorBuffer, "Invalid street name");
-                if (!inRange(streetNumber, 1, 10, true))
-                    append(ref errorBuffer, "Invalid street number");
-                if (!inRange(city, 1, 100, true))
-                    append(ref errorBuffer, "Invalid city");
-                if (!inRange(maxChildren, 0, 999999999, false))
-                    append(ref errorBuffer, "Invalid maxChildren");
-                if (!inRange(minAge, 0, 216, false))
-                    append(ref errorBuffer, "Invalid minAge");
-                if (!inRange(maxAge, 0, 216, false))
-                    append(ref errorBuffer, "Invalid maxAge");
-                if (!inRange(hourRate, 0, 99999, false))
-                    append(ref errorBuffer, "Invalid hourRate");
-                if (!inRange(monthRate, 0, 9999999, false))
-                    append(ref errorBuffer, "Invalid monthRate");
-                if (!inRange(perHourRate, 0, 1))
-                    append(ref errorBuffer, "Invalid 'perHourRate'");
-                if (!validateDate(birthDate))
-                    append(ref errorBuffer, "Invalid birth Date");
-                if (!inRange(experianceYears, 0, 90))
-                    append(ref errorBuffer, "Invalid years of experiance");
-                if (!inRange(hasElevator, 0, 1))
-                    append(ref errorBuffer, "Invalid 'has Elevator'");
-                if (!inRange(recommandations, 0, 99999, true))
-                    append(ref errorBuffer, "Invalid recommandations");
-                if (!inRange(bankISBN, 0, 64, true))
-                    append(ref errorBuffer, "Invalid recommandations");
-                if (!timeFromUntilValidation(day1, dayTimeFrom1, dayTimeUntil1))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day2, dayTimeFrom2, dayTimeUntil2))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day3, dayTimeFrom3, dayTimeUntil3))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day4, dayTimeFrom4, dayTimeUntil4))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day5, dayTimeFrom5, dayTimeUntil5))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day6, dayTimeFrom6, dayTimeUntil6))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
-                if (!timeFromUntilValidation(day7, dayTimeFrom7, dayTimeUntil7))
-                    append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!InRange(id, 0, 999999999, false))
+                    Append(ref errorBuffer, "Invalid ID");
+                if (!InRange(familyName, 1, 100, true))
+                    Append(ref errorBuffer, "Invalid First Name");
+                if (!InRange(firstName, 1, 100, true))
+                    Append(ref errorBuffer, "Invalid Family Name");
+                if (!InRange(phone, 1, 20, true))
+                    Append(ref errorBuffer, "Invalid phone Number");
+                if (!InRange(street, 1, 100, true))
+                    Append(ref errorBuffer, "Invalid street name");
+                if (!InRange(streetNumber, 1, 10, true))
+                    Append(ref errorBuffer, "Invalid street number");
+                if (!InRange(city, 1, 100, true))
+                    Append(ref errorBuffer, "Invalid city");
+                if (!InRange(maxChildren, 0, 999999999, false))
+                    Append(ref errorBuffer, "Invalid maxChildren");
+                if (!InRange(minAge, 0, 216, false))
+                    Append(ref errorBuffer, "Invalid minAge");
+                if (!InRange(maxAge, 0, 216, false))
+                    Append(ref errorBuffer, "Invalid maxAge");
+                if (!InRange(hourRate, 0, 99999, false))
+                    Append(ref errorBuffer, "Invalid hourRate");
+                if (!InRange(monthRate, 0, 9999999, false))
+                    Append(ref errorBuffer, "Invalid monthRate");
+                if (!InRange(perHourRate, 0, 1))
+                    Append(ref errorBuffer, "Invalid 'perHourRate'");
+                if (!ValidateDate(birthDate))
+                    Append(ref errorBuffer, "Invalid birth Date");
+                if (!InRange(experianceYears, 0, 90))
+                    Append(ref errorBuffer, "Invalid years of experiance");
+                if (!InRange(hasElevator, 0, 1))
+                    Append(ref errorBuffer, "Invalid 'has Elevator'");
+                if (!InRange(recommandations, 0, 99999, true))
+                    Append(ref errorBuffer, "Invalid recommandations");
+                if (!InRange(bankISBN, 0, 64, true))
+                    Append(ref errorBuffer, "Invalid recommandations");
+                if (!TimeFromUntilValidation(day1, dayTimeFrom1, dayTimeUntil1))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day2, dayTimeFrom2, dayTimeUntil2))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day3, dayTimeFrom3, dayTimeUntil3))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day4, dayTimeFrom4, dayTimeUntil4))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day5, dayTimeFrom5, dayTimeUntil5))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day6, dayTimeFrom6, dayTimeUntil6))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
+                if (!TimeFromUntilValidation(day7, dayTimeFrom7, dayTimeUntil7))
+                    Append(ref errorBuffer, "Timeframe of day1 Incorrect!"); //Must be 0000 To 2359, From <= Until
 
 
                 if (errorBuffer == "") //Success befor trying to add
@@ -345,7 +232,7 @@
             /// </summary>
             /// <param name="text">The <see cref="string"/></param>
             /// <param name="addText">The <see cref="string"/></param>
-            void append(ref string text, string addText)
+            void Append(ref string text, string addText)
             {
                 if (text != "")
                     text += "\n";
@@ -360,9 +247,9 @@
             /// <returns>The <see cref="bool"/></returns>
             bool DateFromUntilValidation(string dFrom, string dUntil)
             {
-                if (!validateDate(dFrom) || !validateDate(dUntil))
+                if (!ValidateDate(dFrom) || !ValidateDate(dUntil))
                     return false; //Make sure dates are valid
-                if (Int32.Parse(dFrom) > Int32.Parse(dUntil))
+                if (int.Parse(dFrom) > int.Parse(dUntil))
                     return false; // Make sure From is not after Until
                 return true;
             }
@@ -374,13 +261,13 @@
             /// <param name="nannyId">The <see cref="string"/></param>
             /// <param name="motherId">The <see cref="string"/></param>
             /// <returns>The <see cref="string"/></returns>
-            string getDistance(string nannyId, string motherId)
+            string GetDistance(string nannyId, string motherId)
             {
                 string outputBuffer = "";
-                if (!inRange(nannyId, 0, 999999999, false))
-                    append(ref outputBuffer, "Invalid ID");
-                if (!inRange(motherId, 0, 999999999, false))
-                    append(ref outputBuffer, "Invalid Mother ID");
+                if (!InRange(nannyId, 0, 999999999, false))
+                    Append(ref outputBuffer, "Invalid ID");
+                if (!InRange(motherId, 0, 999999999, false))
+                    Append(ref outputBuffer, "Invalid Mother ID");
 
                 if (outputBuffer == "") //Success befor trying to add
                 {
@@ -400,7 +287,7 @@
             /// <param name="max">The <see cref="int"/></param>
             /// <param name="charLen">The <see cref="bool"/></param>
             /// <returns>The <see cref="bool"/></returns>
-            bool inRange(string data, int min, int max, bool charLen = false)
+            bool InRange(string data, int min, int max, bool charLen = false)
             {
                 int value = 0;
                 if (!charLen && !int.TryParse(data, out value))
@@ -416,13 +303,13 @@
             /// <param name="tFrom">The <see cref="string"/></param>
             /// <param name="tUntil">The <see cref="string"/></param>
             /// <returns>The <see cref="bool"/></returns>
-            bool timeFromUntilValidation(string dayBool, string tFrom, string tUntil)
+            bool TimeFromUntilValidation(string dayBool, string tFrom, string tUntil)
             {
-                if (!inRange(dayBool, 0, 1))
+                if (!InRange(dayBool, 0, 1))
                     return false;
-                if (!validateTime(tFrom) || !validateTime(tUntil))
+                if (!ValidateTime(tFrom) || !ValidateTime(tUntil))
                     return false; //Make sure times are valid
-                if (Int32.Parse(tFrom) > Int32.Parse(tUntil))
+                if (int.Parse(tFrom) > int.Parse(tUntil))
                     return false; // Make sure Time From is not after Until
                 return true;
             }
@@ -432,15 +319,15 @@
             /// </summary>
             /// <param name="date">The <see cref="string"/></param>
             /// <returns>The <see cref="bool"/></returns>
-            private bool validateDate(string date) //I Want to get format "YYYYMMDD"
+            private bool ValidateDate(string date) //I Want to get format "YYYYMMDD"
             {
-                if (!inRange(date, 8, 8, true))
+                if (!InRange(date, 8, 8, true))
                     return false; //not ####
-                if (!inRange(date[0].ToString() + date[1].ToString() + date[2].ToString() + date[3].ToString(), 1970, 2030))
+                if (!InRange(date[0].ToString() + date[1].ToString() + date[2].ToString() + date[3].ToString(), 1970, 2030))
                     return false; //YYYY
-                if (!inRange(date[4].ToString() + date[5].ToString(), 1, 12))
+                if (!InRange(date[4].ToString() + date[5].ToString(), 1, 12))
                     return false; //MM
-                if (!inRange(date[6].ToString() + date[7].ToString(), 1, 31))
+                if (!InRange(date[6].ToString() + date[7].ToString(), 1, 31))
                     return false;//DD
                 return true;
             }
@@ -450,18 +337,33 @@
             /// </summary>
             /// <param name="time">The <see cref="string"/></param>
             /// <returns>The <see cref="bool"/></returns>
-            private bool validateTime(string time)
+            private bool ValidateTime(string time)
             {
-                if (!inRange(time, 4, 4, true))
+                if (!InRange(time, 4, 4, true))
                     return false; //not ####
-                if (!inRange(time[0].ToString() + time[1].ToString(), 0, 23))
+                if (!InRange(time[0].ToString() + time[1].ToString(), 0, 23))
                     return false;
-                if (!inRange(time[2].ToString() + time[3].ToString(), 0, 59))
+                if (!InRange(time[2].ToString() + time[3].ToString(), 0, 59))
                     return false;
                 return true;
             }
-
             #endregion
+        }
+
+        internal static class Parsers
+        {
+            public static int ToInt(this string str) => int.Parse(str);
+            public static long ToLong(this string str) => long.Parse(str);
+            public static bool ToBool(this string str) => str == "1" || str == "0" ? str == "1" : bool.Parse(str);
+            public static BE.Child ToChild(this string str) => new BE.Child(str.ToLong());
+            public static BE.Child GetChild(this DS.Dal_imp dal_imp,string id) => dal_imp.Child.GetListOfT().Find(cid=>cid==id.ToChild());
+            public static BE.Nanny ToNanny(this string str) => new BE.Nanny(str.ToLong());
+            public static BE.Nanny GetNanny(this DS.Dal_imp dal_imp, string id) => dal_imp.Nanny.GetListOfT().Find(cid => cid == id.ToNanny());
+            public static BE.Contract ToContract(this string str) => new BE.Contract(str.ToLong());
+            public static BE.Contract GetContract(this DS.Dal_imp dal_imp, string id) => dal_imp.Contract.GetListOfT().Find(cid => cid == id.ToContract());
+            public static BE.Mother ToMother(this string str) => new BE.Mother(str.ToLong());
+            public static BE.Mother GetMother(this DS.Dal_imp dal_imp, string id) => dal_imp.Mother.GetListOfT().Find(cid => cid == id.ToMother());
+            public static BE.Mother GetMother(this DS.Dal_imp dal_imp, long id) => dal_imp.GetMother(id.ToString());
         }
     }
 }
