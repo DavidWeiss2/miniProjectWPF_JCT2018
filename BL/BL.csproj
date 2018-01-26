@@ -41,7 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bl.cs" />
+    <Compile Include="DalExtaions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringParsers.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE.csproj">

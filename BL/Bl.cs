@@ -11,58 +11,7 @@
         /// <summary>
         /// Defines the <see cref="Parsers" />
         /// </summary>
-        internal static class Parsers
-        {
-            #region Methods
 
-            public static DateTime FromYYYYMMDD(this string str) => DateTime.ParseExact(str, "yyyyMMdd",
-                CultureInfo.InvariantCulture);
-
-            public static BE.Child GetChild(this DS.Dal_imp dal_imp, string id) => dal_imp.Child.GetListOfT.Find(cid => cid == id.ToChild());
-
-            public static BE.Contract GetContract(this DS.Dal_imp dal_imp, string id) => dal_imp.Contract.GetListOfT.Find(cid => cid == id.ToContract());
-
-            public static BE.Mother GetMother(this DS.Dal_imp dal_imp, long id) => dal_imp.GetMother(id.ToString());
-
-            public static BE.Mother GetMother(this DS.Dal_imp dal_imp, string id) => dal_imp.Mother.GetListOfT.Find(cid => cid == id.ToMother());
-
-            public static BE.Nanny GetNanny(this DS.Dal_imp dal_imp, string id) => dal_imp.Nanny.GetListOfT.Find(cid => cid == id.ToNanny());
-
-            public static Tuple<bool[], int[][]> ParseWeekSched(this string str)
-            {
-                string[] weekHolder = str.Split(';');
-                if (weekHolder.Length != 7)
-                    throw new FormatException($"Week have excecly 7 days thrown by: {nameof(ParseWeekSched)}.");
-                List<bool> workingDays = new List<bool>(7);
-                List<int[]> workingHours = new List<int[]>(7);
-                for (int i = 0; i < 7; i++)
-                {
-                    string dayHolder = weekHolder[i];
-                    foreach (char c in dayHolder)
-                    {
-                        "0123456789.".IndexOf(c);
-                    }
-                    string[] dayTimeHolder = dayHolder.Split('.');
-                }
-                return Tuple.Create(workingDays.ToArray(), workingHours.ToArray());
-            }
-
-            public static bool ToBool(this string str) => str == "1" || str == "0" ? str == "1" : bool.Parse(str);
-
-            public static BE.Child ToChild(this string str) => new BE.Child(str.ToLong());
-
-            public static BE.Contract ToContract(this string str) => new BE.Contract(str.ToLong());
-
-            public static int ToInt(this string str) => int.Parse(str);
-
-            public static long ToLong(this string str) => long.Parse(str);
-
-            public static BE.Mother ToMother(this string str) => new BE.Mother(str.ToLong());
-
-            public static BE.Nanny ToNanny(this string str) => new BE.Nanny(str.ToLong());
-
-            #endregion
-        }
 
         /// <summary>
         /// Defines the <see cref="Bl" />
@@ -126,9 +75,8 @@
                         BE.Nanny nanny = this.dal_Imp.GetNanny(idNanny);
                         BE.Child child = this.dal_Imp.GetChild(idChild);
                         BE.Mother mother = this.dal_Imp.GetMother(child.MotherID);
-                        bool[] isSearchingInDay = new bool[7];
-                        int[][] workingTimes = new int[7][];
-                        this.dal_Imp.Contract.Add(new BE.Contract(this.dal_Imp.Contract.MaxID + 1, nanny, mother, child, perHourBool.ToBool(), dateFrom.FromYYYYMMDD(), dateUntil.FromYYYYMMDD(), isSearchingInDay, workingTimes, isMets.ToBool(), isSigned.ToBool()));
+                        (bool[] workingDays, int[][] workingHours) tupleSched = weekSched.ParseWeekSched();
+                        this.dal_Imp.Contract.Add(new BE.Contract(this.dal_Imp.Contract.MaxID + 1, nanny, mother, child, perHourBool.ToBool(), dateFrom.FromYYYYMMDD(), dateUntil.FromYYYYMMDD(), tupleSched.workingDays, tupleSched.workingHours, isMets.ToBool(), isSigned.ToBool()));
                     }
                     catch (Exception e)
                     {
