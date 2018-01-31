@@ -3,22 +3,16 @@
     using System;
     using System.Collections.Generic;
 
-    #region Classes
-
     /// <summary>
     /// Defines the <see cref="Id" />
     /// </summary>
     public class Id : IEquatable<Id>, IComparable
     {
+        #region Properties
+
         public new Type GetType => this.GetType();
         public string GetTypeName => this.GetType().Name;
-        public long ID
-        {
-            get;
-        }
-        #region Constructors
-
-        public Id(long iD = 0) => this.ID = iD;
+        public long ID { get; } = -1;
 
         #endregion
 
@@ -43,7 +37,7 @@
 
         #endregion
 
-
+        public Id(long id = -1) => this.ID = id;
 
 
 
@@ -54,11 +48,9 @@
         public static bool operator >=(Id left, Id right) => left.CompareTo(right) >= 0;
         public static bool operator <=(Id left, Id right) => left.CompareTo(right) <= 0;
 
-
-
         public static bool operator ==(Id left, Id right) => EqualityComparer<Id>.Default.Equals(left, right);
+        public static bool operator ==(long left, Id right) => left==right.ID;
+        public static bool operator !=(long left, Id right) => left == right;
         public static bool operator !=(Id left, Id right) => !(left == right);
     }
-
-    #endregion
 }

@@ -10,113 +10,75 @@ namespace BE
     /// </summary>
     public class Nanny : Human
     {
-        #region Fields
-
-        private string bankInfo;
-        private double experience;
-        private int floor;
-        private bool isAcceptingHourlyWage;
-        private bool isElevatorBuilding;
-        private bool isVacationBasedOnTamat;
-        private bool[] isWorkingInDay = new bool[7];
-        private int maxAgeApprovel;
-        private int maxNumOfChildrens;
-        private int minAgeApprovel;
-        private string phoneNumber;
-        private string recommendion;
-        private double wagePerHour;
-        private double wagePerMonth;
-        private int[,] workingTimes = new int[7, 2];
-
-        #endregion
 
         #region Properties
 
         public string BankInfo
         {
-            get => this.bankInfo;
-            set => this.bankInfo = value.IsNotNull(nameof(this.BankInfo));
-        }
+            get; set;
+        } = "";
         public double Experience
         {
-            get => this.experience; set => this.experience = (double)value.IsInRange(value>0,nameof(this.Experience),"","0");
+            get; set;
         }
         public int Floor
         {
-            get => this.floor; set => this.floor = value;
+            get; set;
         }
         public bool IsAcceptingHourlyWage
         {
-            get => this.isAcceptingHourlyWage; set => this.isAcceptingHourlyWage = value;
+            get; set;
         }
         public bool IsElevatorBuilding
         {
-            get => this.isElevatorBuilding; set => this.isElevatorBuilding = value;
+            get; set;
         }
         public bool IsVacationBasedOnTamat
         {
-            get => this.isVacationBasedOnTamat; set => this.isVacationBasedOnTamat = value;
+            get; set;
         }
         public bool[] IsWorkingInDay
         {
-            get => this.isWorkingInDay; set => this.isWorkingInDay = value;
+            get; set;
         }
         public int MaxAgeApprovel
         {
-            get => this.maxAgeApprovel; set => this.maxAgeApprovel = (int)value.IsInRange(value > this.MinAgeApprovel, nameof(this.MaxAgeApprovel), "", this.MinAgeApprovel.ToString());
+            get; set;
         }
         public int MaxNumOfChildrens
         {
-            get => this.maxNumOfChildrens; set => this.maxNumOfChildrens = (int)value.IsInRange(value > 0, nameof(this.MaxNumOfChildrens), "", "0");
+            get; set;
         }
         public int MinAgeApprovel
         {
-            get => this.minAgeApprovel; set => this.minAgeApprovel = (int)value.IsInRange(value > 0, nameof(this.MinAgeApprovel), "", "0");
+            get; set;
         }
         public string PhoneNumber
         {
-            get => this.phoneNumber; set => this.phoneNumber = value.IsNotNull(nameof(this.PhoneNumber));
-        }
+            get; set;
+        } = "";
         public string Recommendion
         {
-            get => this.recommendion; set => this.recommendion = value.IsNotNull(nameof(this.Recommendion));
-        }
+            get; set;
+        } = "";
         public double WagePerHour
         {
-            get => this.wagePerHour; set => this.wagePerHour = (double)value.IsInRange(value>0,nameof(this.WagePerHour),"","0");
+            get; set;
         }
         public double WagePerMonth
         {
-            get => this.wagePerMonth; set => this.wagePerMonth = (double)value.IsInRange(value > 0, nameof(this.WagePerMonth), "", "0");
+            get; set;
         }
         public int[,] WorkingTimes
         {
-            get => this.workingTimes; set => this.workingTimes = value;
+            get; set;
         }
 
         #endregion
 
         #region Constructors
 
-        public Nanny(long iD = 0) : base(iD) { }
-        public Nanny(long iD, DateTime dateOfBirth, string firstName, string lastName, double experience, string address, string phoneNumber, int[,] workingTimes, bool[] isWorkingInDay, string bankInfo, bool isAcceptingHourlyWage = false, bool isElevatorBuilding = true, bool isVacationBasedOnTamat = true, int floor = 0, int maxAgeApprovel = 36, int maxNumOfChildrens = 6, int minAgeApprovel = 3, string recommendion = "", double wagePerHour = 25, double wagePerMonth = 5000, bool isFemale = true) : base(iD, dateOfBirth, firstName, lastName, isFemale, address)
-        {
-            this.Experience = experience;
-            this.Floor = floor;
-            this.IsAcceptingHourlyWage = isAcceptingHourlyWage;
-            this.IsElevatorBuilding = isElevatorBuilding;
-            this.IsVacationBasedOnTamat = isVacationBasedOnTamat;
-            this.MinAgeApprovel = minAgeApprovel;
-            this.MaxAgeApprovel = maxAgeApprovel;
-            this.MaxNumOfChildrens = maxNumOfChildrens;
-            this.Recommendion = recommendion;
-            this.WagePerHour = wagePerHour;
-            this.WagePerMonth = wagePerMonth;
-            this.IsWorkingInDay = isWorkingInDay;
-            this.WorkingTimes = workingTimes;
-            this.PhoneNumber = phoneNumber;
-            this.BankInfo = bankInfo;
-        }
+        public Nanny(long id = 0) : base(id) { }
 
         #endregion
     }

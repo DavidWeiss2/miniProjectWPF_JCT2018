@@ -1,4 +1,6 @@
 ﻿
+using System;
+[assembly: CLSCompliant(true)]
 namespace DS
 {
     using System;
@@ -10,35 +12,51 @@ namespace DS
     /// <summary>
     /// Defines the <see cref="DataSource" />
     /// </summary>
-    public static class DataSource
+    public class DataSource
     {
         #region Fields
 
-        private static List<Child> childList = new List<Child>();
-        private static List<Contract> contractList = new List<Contract>();
-        private static List<Mother> motherList = new List<Mother>();
-        private static List<Nanny> nannyList = new List<Nanny>();
+        private static List<Child> childList;
+        private static List<Contract> contractList;
+        private static List<Mother> motherList;
+        private static List<Nanny> nannyList;
 
         public static List<Child> ChildList
         {
-            get => childList;
-            set => childList = value;
+            get {
+                if (null == childList)
+                    childList = new List<Child>();
+                return childList;
+            }
         }
         public static List<Contract> ContractList
         {
-            get => contractList;
-            set => contractList = value;
+            get
+            {
+                if (null == contractList)
+                    contractList = new List<Contract>();
+                return contractList;
+            }
         }
         public static List<Mother> MotherList
         {
-            get => motherList;
-            set => motherList = value;
+            get
+            {
+                if (null == motherList)
+                    motherList = new List<Mother>();
+                return motherList;
+            }
         }
         public static List<Nanny> NannyList
         {
-            get => nannyList;
-            set => nannyList = value;
+            get
+            {
+                if (null == nannyList)
+                    nannyList = new List<Nanny>();
+                return nannyList;
+            }
         }
+        private DataSource() { }
 
         #endregion
     }

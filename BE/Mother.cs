@@ -10,50 +10,35 @@ namespace BE
     /// </summary>
     public class Mother : Human
     {
-        #region Fields
-
-        private string addressOfSerchArea;
-        private bool[] IsSearchingInDay = new bool[7];
-        private string notes;
-        private string phoneNumber;
-        private int[,] WorkingTimes = new int[7, 2];
-
-        #endregion
 
         #region Properties
 
         public string AddressOfSerchArea
         {
-            get => this.addressOfSerchArea; set => this.addressOfSerchArea = value.IsNotNull(nameof(this.AddressOfSerchArea));
-        }
-        public bool[] IsSearchingInDay1
+            get; set;
+        } = "";
+        public bool[] IsSearchingInDay1l
         {
-            get => this.IsSearchingInDay; set => this.IsSearchingInDay = value;
+            get; set;
         }
         public string Notes
         {
-            get => this.notes; set => this.notes = value.IsNotNull(nameof(this.Notes));
-        }
+            get; set;
+        } = "";
         public string PhoneNumber
         {
-            get => this.phoneNumber; set => this.phoneNumber = value.IsNotNull(nameof(this.PhoneNumber));
-        }
+            get; set;
+        } = "";
         public int[,] WorkingTimes1
         {
-            get => this.WorkingTimes; set => this.WorkingTimes = value;
+            get; set;
         }
 
         #endregion
 
         #region Constructors
 
-        public Mother(long iD = 0) : base(iD) { }
-        public Mother(long iD, string firstName, string lastName, DateTime dateOfBirth, string address, string phoneNumber, string addressOfSerchArea, string notes, bool isFemale = true) : base(iD, dateOfBirth, firstName, lastName, isFemale, address)
-        {
-            this.AddressOfSerchArea = addressOfSerchArea;
-            this.PhoneNumber = phoneNumber;
-            this.Notes = notes;
-        }
+        public Mother(long id = 0) : base(id) { }
 
         #endregion
     }

@@ -1,44 +1,27 @@
-﻿
-namespace DAL
+﻿namespace DAL
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using BE;
 
     /// <summary>
-    /// Defines the <see cref="IDal" />
+    /// Defines the <see cref="IDal{T}" />
     /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IDal<T>
     {
         #region Methods
-        /// <summary>
-        /// The Add
-        /// </summary>
-        /// <param name="item">The <see cref="T"/></param>
-        void Add(T item);
 
-        /// <summary>
-        /// The Edit
-        /// </summary>
-        /// <param name="item">The <see cref="T"/></param>
-        void Edit(T item);
+        Result<T> Add(T item);
 
-        /// <summary>
-        /// The GetListOfT
-        /// </summary>
-        /// <returns>The <see cref="List{T}"/></returns>
-        List<T> GetGetListOfT();
+        Result<T> Edit(T item);
 
-        /// <summary>
-        /// The GetListofTByKeyField
-        /// </summary>
-        /// <param name="keyField">The <see cref="string"/></param>
-        /// <returns>The <see cref="List{T}"/></returns>
-        List<T> GetListofTByKeyField(string keyField);
+        Result<List<T>> GetListOfT();
 
-        /// <summary>
-        /// The Remove
-        /// </summary>
-        /// <param name="item">The <see cref="T"/></param>
-        void Remove(T item);
+        Result<IEnumerable<IGrouping<Func<object, object>, T>>> GetListofTByKeyField(string keyField);
+
+        Result<T> Remove(T item);
 
         #endregion
     }

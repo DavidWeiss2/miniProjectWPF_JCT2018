@@ -8,11 +8,11 @@ namespace BE
 {
     public static class TextFormats
     {
-        public static string HebrewLetters => GetRangeOfChers('א','ת');
-        public static string EnglishLetters => GetRangeOfChers('a', 'z')+ GetRangeOfChers('A', 'Z');
-        public static string Numrics => GetRangeOfChers('0', '9');
+        public static string HebrewLetters => GetRangeOfChars('א','ת');
+        public static string EnglishLetters => GetRangeOfChars('a', 'z')+ GetRangeOfChars('A', 'Z');
+        public static string Numrics => GetRangeOfChars('0', '9');
         public static string Letters => HebrewLetters + EnglishLetters;
-        private static string GetRangeOfChers(char first, char end)
+        public static string GetRangeOfChars(char first, char end)
         {
             StringBuilder stringBuilder = new StringBuilder();
             for (char i = first; i <= end; i++)
