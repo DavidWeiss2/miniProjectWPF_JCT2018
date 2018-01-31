@@ -1,0 +1,36 @@
+﻿<Window x:Class="iNannay.Contracts"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:iNannay"
+        mc:Ignorable="d"
+        Title="iNanny - Contracts" Height="621.946" Width="949" FontSize="16">
+    <Grid Margin="0,0,-3,0">
+        <Canvas HorizontalAlignment="Left" Height="265" Margin="15,15,0,0" VerticalAlignment="Top" Width="910" Background="Gainsboro">
+            <local:UC_week_sched_picker x:Name="motherTimes" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="638" Canvas.Left="17" Canvas.Top="80"/>
+            <TextBox x:Name="txtID" Height="26" Canvas.Left="50" TextWrapping="Wrap" Canvas.Top="9" Width="133" TextChanged="txtID_TextChanged" MaxLength="9" AutoWordSelection="True" AcceptsTab="True"/>
+            <Label x:Name="lblID" Content="ID&#xD;&#xA;" Height="26" Canvas.Left="10" Canvas.Top="10" Width="36" HorizontalContentAlignment="Center" Padding="0"/>
+            <TextBox x:Name="txtID_Copy" Height="26" Canvas.Left="280" TextWrapping="Wrap" Canvas.Top="9" Width="113" TextChanged="txtID_TextChanged" MaxLength="9" AutoWordSelection="True" AcceptsTab="True"/>
+            <Label x:Name="lblID_Copy" Content="Nanny ID&#xA;" Height="26" Canvas.Left="185" Canvas.Top="9" Width="101" HorizontalContentAlignment="Center" Padding="0"/>
+            <TextBox x:Name="txtID_Copy1" Height="26" Canvas.Left="490" TextWrapping="Wrap" Canvas.Top="10" Width="140" TextChanged="txtID_TextChanged" MaxLength="9" AutoWordSelection="True" AcceptsTab="True"/>
+            <Label x:Name="lblID_Copy1" Content="Mother ID&#xA;" Height="26" Canvas.Left="400" Canvas.Top="10" Width="85" HorizontalContentAlignment="Center" Padding="0" RenderTransformOrigin="0.059,0.769"/>
+            <TextBox x:Name="txtID_Copy3" Height="26" Canvas.Left="745" TextWrapping="Wrap" Canvas.Top="9" Width="135" TextChanged="txtID_TextChanged" MaxLength="9" AutoWordSelection="True" AcceptsTab="True"/>
+            <Label x:Name="lblID_Copy3" Content="Child ID&#xA;" Height="26" Canvas.Top="10" Width="81" HorizontalContentAlignment="Center" Padding="0" RenderTransformOrigin="0.059,0.769" Canvas.Left="660"/>
+            <Button x:Name="button" Content="Add/Save" Height="50" Canvas.Left="255" Canvas.Top="195" Width="395" Background="#FF82A6F3" Foreground="White"/>
+            <CheckBox x:Name="checkBox" Content="Signed" Height="25" Canvas.Left="120" Canvas.Top="215" Width="120"/>
+        </Canvas>
+        <ListView x:Name="lstvMothers" HorizontalAlignment="Left" Height="279" Margin="20,290,0,0" VerticalAlignment="Top" Width="905">
+            <ListView.View>
+                <GridView>
+
+                    <GridViewColumn Header="ID" Width="120" DisplayMemberBinding="{Binding dID}" />
+                    <GridViewColumn Header="LastName" Width="140" DisplayMemberBinding="{Binding dLastName}" />
+                    <GridViewColumn Header="FirstName" Width="140" DisplayMemberBinding="{Binding dFirstName}" />
+                    <GridViewColumn Header="Phone" Width="140" DisplayMemberBinding="{Binding dPhone}" />
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

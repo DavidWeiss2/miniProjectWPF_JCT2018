@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="iNannay.UC_day_bool_from_to"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:iNannay"
+             mc:Ignorable="d" Height="100.085" Width="77.375">
+    <Grid x:Name="mainGrid" Background="Black">
+        <TextBox x:Name="txtHH" HorizontalAlignment="Left" Height="24" Margin="11,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="24" FontSize="16" TextChanged="txtHH_TextChanged" MaxLength="2"/>
+        <TextBox x:Name="txtMM" HorizontalAlignment="Left" Height="24" Margin="43,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="24" FontSize="16" MaxLength="2" TextChanged="txtMM_TextChanged"/>
+        <TextBox x:Name="txtHH_to" HorizontalAlignment="Left" Height="24" Margin="11,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="24" FontSize="16" MaxLength="2" TextChanged="txtHH_to_TextChanged"/>
+        <TextBox x:Name="txtMM_to" HorizontalAlignment="Left" Height="24" Margin="43,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="24" FontSize="16" MaxLength="2"/>
+        <Button x:Name="button" Content="{Binding Path=day}" HorizontalAlignment="Left" Height="28" Margin="11,5,0,0" VerticalAlignment="Top" Width="56" Background="#FF337997" Foreground="White" FontSize="15" Click="button_Click"/>
+        <Label x:Name="lblDOTS" Content=":" HorizontalAlignment="Left" Height="30" Margin="32,32,0,0" VerticalAlignment="Top" Width="16" FontSize="16"/>
+        <Label x:Name="lblDOTS_Copy" Content=":" HorizontalAlignment="Left" Height="30" Margin="32,62,0,0" VerticalAlignment="Top" Width="16" FontSize="16"/>
+
+    </Grid>
+</UserControl>
