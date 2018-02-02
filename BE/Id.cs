@@ -27,7 +27,7 @@
             return 1;
         }
 
-        public virtual bool Equals(Id other) => other != null && this.ID == other.ID;
+        public virtual bool Equals(Id other) => other != null && this.ID == other.ID && this.GetType == other.GetType;
 
         public override bool Equals(object obj) => this.Equals(obj as Id);
 
@@ -49,8 +49,8 @@
         public static bool operator <=(Id left, Id right) => left.CompareTo(right) <= 0;
 
         public static bool operator ==(Id left, Id right) => EqualityComparer<Id>.Default.Equals(left, right);
-        public static bool operator ==(long left, Id right) => left==right.ID;
-        public static bool operator !=(long left, Id right) => left == right;
+        //public static bool operator ==(long left, Type type, Id right) => left == right.ID && type == right.GetType;
+        //public static bool operator !=(long left, Type type, Id right) => left == right.ID && type == right.GetType;
         public static bool operator !=(Id left, Id right) => !(left == right);
     }
 }

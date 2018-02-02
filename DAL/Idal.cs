@@ -9,19 +9,19 @@
     /// Defines the <see cref="IDal{T}" />
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IDal<T>
+    public interface IDal
     {
         #region Methods
 
-        Result<T> Add(T item);
+        Result<Id> Add(Id item);
 
-        Result<T> Edit(T item);
+        Result<Id> Edit(Id item);
 
-        Result<List<T>> GetListOfT();
+        Result<List<Id>> GetAListFromType(Type type);
 
-        Result<IEnumerable<IGrouping<Func<object, object>, T>>> GetListofTByKeyField(string keyField);
+        Result<IEnumerable<IGrouping<Func<object, object>, Id>>> GetListofTByKeyField(string keyField, Type type);
 
-        Result<T> Remove(T item);
+        Result<Id> Remove(Id item);
 
         #endregion
     }

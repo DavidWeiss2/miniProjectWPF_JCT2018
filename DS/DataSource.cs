@@ -16,44 +16,14 @@ namespace DS
     {
         #region Fields
 
-        private static List<Child> childList;
-        private static List<Contract> contractList;
-        private static List<Mother> motherList;
-        private static List<Nanny> nannyList;
+        private static List<Id> list;
 
-        public static List<Child> ChildList
+        public static List<Id> List
         {
             get {
-                if (null == childList)
-                    childList = new List<Child>();
-                return childList;
-            }
-        }
-        public static List<Contract> ContractList
-        {
-            get
-            {
-                if (null == contractList)
-                    contractList = new List<Contract>();
-                return contractList;
-            }
-        }
-        public static List<Mother> MotherList
-        {
-            get
-            {
-                if (null == motherList)
-                    motherList = new List<Mother>();
-                return motherList;
-            }
-        }
-        public static List<Nanny> NannyList
-        {
-            get
-            {
-                if (null == nannyList)
-                    nannyList = new List<Nanny>();
-                return nannyList;
+                if (null == list)
+                    list = new List<Id>();
+                return list;
             }
         }
         private DataSource() { }
