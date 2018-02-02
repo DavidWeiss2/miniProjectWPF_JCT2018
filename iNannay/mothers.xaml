@@ -28,9 +28,9 @@
                 <GridView>
 
                     <GridViewColumn Header="ID" Width="120" DisplayMemberBinding="{Binding ID}" />
-                    <GridViewColumn Header="LastName" Width="140" DisplayMemberBinding="{Binding dLastName}" />
-                    <GridViewColumn Header="FirstName" Width="140" DisplayMemberBinding="{Binding dFirstName}" />
-                    <GridViewColumn Header="Phone" Width="140" DisplayMemberBinding="{Binding dPhone}" />
+                    <GridViewColumn Header="LastName" Width="140" DisplayMemberBinding="{Binding LastName}" />
+                    <GridViewColumn Header="FirstName" Width="140" DisplayMemberBinding="{Binding FirstName}" />
+                    <GridViewColumn Header="Phone" Width="140" DisplayMemberBinding="{Binding PhoneNumber}" />
 
                 </GridView>
             </ListView.View>

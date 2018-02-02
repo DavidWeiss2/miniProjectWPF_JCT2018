@@ -17,9 +17,9 @@
 
         Result<Id> Edit(Id item);
 
-        Result<List<Id>> GetAListFromType(Type type);
+        Result<List<Id>> GetList(Type type);
 
-        Result<IEnumerable<IGrouping<Func<object, object>, Id>>> GetListofTByKeyField(string keyField, Type type);
+        Result<IEnumerable<IGrouping<Func<object, object>, Id>>> Group(string keyField, Type type);
 
         Result<Id> Remove(Id item);
 

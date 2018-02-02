@@ -20,34 +20,59 @@ namespace iNannay
     /// </summary>
     public partial class mothers : Window
     {
-        List<Mother> items;
+        public BL.Bl BL
+        {
+            get; set;
+        } = new BL.Bl();
         public mothers()
         {
             InitializeComponent();
-             items = new List<Mother>();
-            
-            refreshData();
+
+            RefreshData();
         }
 
         private void txtID_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
-        private void refreshData(long ID = -1)
+        private void RefreshData(long ID = -1)
         {
-
-            items.Add(new Mother(22334456));
-            items.Add(new Mother(22334457));
-            items.Add(new Mother(22334458));
-            lstvMothers.ItemsSource = items;
+            this.BL.Add(new Mother(223344256)
+            {
+                FirstName = "my",
+                LastName = "lady",
+                PhoneNumber = "phone"
+            });
+            this.BL.Add(new Mother(224334458)
+            {
+                FirstName = "my",
+                LastName = "lady",
+                PhoneNumber = "phone"
+            });
+            this.BL.Add(new Mother(223374459)
+            {
+                FirstName = "my",
+                LastName = "lady",
+                PhoneNumber = "phone"
+            });
+            this.lstvMothers.ItemsSource = this.BL.GetList(typeof(Mother), "LastName", true).Value;
         }
         public class User
         {
-            public string dID { get; set; }
+            public string ID
+            {
+                get; set;
+            }
 
-            public string dFirstName { get; set; }
+            public string FirstName
+            {
+                get; set;
+            }
 
-            public string dLastName { get; set; }
+            public string LastName
+            {
+                get; set;
+            }
         }
 
     }

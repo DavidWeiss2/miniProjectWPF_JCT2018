@@ -2,6 +2,9 @@
 [assembly: CLSCompliant(true)]
 namespace BL
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using BE;
     using DAL;
 
     /// <summary>
@@ -9,204 +12,92 @@ namespace BL
     /// </summary>
     public class Bl : IBl
     {
-
-        #region Methods
-
-        /// <summary>
-        /// args[0] need to be name of class upper cased
-        /// for every arg the odd number n is the arg name
-        /// and the n+1 is the value.
-        /// availble args are:
-        /// 
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public string Add(string[] args)
+        public Dal Dal
         {
-            switch (args[0])
+            get; set;
+        } = new Dal();
+        private static Result<object> ErrorInvaildMassege(string typeName) => new Result<object>($"I dont know what {typeName} is. please check the wiki, or spelling.");
+        public Result<Id> Add(Id item)
+        {
+            Result<Id> result = new Result<Id>(item);
+            switch (item.GetTypeName)
             {
                 case "Child":
-                    return AddChild(args);
+                    break;
                 case "Mother":
-                    return AddMother(args);
+                    break;
                 case "Nanny":
-                    return AddNanny(args);
+                    break;
                 case "Contract":
-                    return AddContract(args);
+                    break;
                 default:
-                    return ErrorInvaildMassege(args[0]);
+                    return result + ErrorInvaildMassege(item.GetTypeName);
             }
+            return this.Dal.Add(item);
         }
 
-        private string AddChild(string[] args)
+        public Result<Id> Edit(Id item)
         {
-            throw new NotImplementedException();
-        }
-
-        private string AddContract(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        private string AddMother(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        private string AddNanny(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string Edit(string[] args)
-        {
-            switch (args[0])
+            Result<Id> result = new Result<Id>(item);
+            switch (item.GetTypeName)
             {
                 case "Child":
-                    return EditChild(args);
+                    break;
                 case "Mother":
-                    return EditMother(args);
+                    break;
                 case "Nanny":
-                    return EditNanny(args);
+                    break;
                 case "Contract":
-                    return EditContract(args);
+                    break;
                 default:
-                    return ErrorInvaildMassege(args[0]);
+                    break;
             }
+            return this.Dal.Add(item);
         }
-
-        private string EditChild(string[] args)
+        public Result<List<Id>> GetList(Type type, string orderByField,bool toOrderByAscending)
         {
-            throw new NotImplementedException();
+            Result<List<Id>> result = this.Dal.GetList(type);
+            result +=new Result<List<Id>>(toOrderByAscending?
+                result.Value.OrderBy<Id, object>(type.CreateGetter(orderByField)).ToList():
+                result.Value.OrderByDescending<Id, object>(type.CreateGetter(orderByField)).ToList());
+            return result;
         }
-
-        private string EditContract(string[] args)
+        public Result<IEnumerable<IGrouping<Func<object, object>, Id>>> Group(string[] keyFields, Type type)
         {
-            throw new NotImplementedException();
-        }
-
-        private string EditMother(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        private string EditNanny(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static string ErrorInvaildMassege(string arg0) => $"I dont know what {arg0} is. please check the wiki, or spelling.";
-
-        private string GetChild(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        private string GetContract(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetList(string[] args)
-        {
-            switch (args[0])
+            Result<IEnumerable<IGrouping<Func<object, object>, Id>>> result = new Result<IEnumerable<IGrouping<Func<object, object>, Id>>>();
+            switch (type.Name)
             {
                 case "Child":
-                    return GetChild(args);
+                    break;
                 case "Mother":
-                    return GetMother(args);
+                    break;
                 case "Nanny":
-                    return GetNanny(args);
+                    break;
                 case "Contract":
-                    return GetContract(args);
+                    break;
                 default:
-                    return ErrorInvaildMassege(args[0]);
+                    break;
             }
+            return result;
         }
-
-        private string GetMother(string[] args)
+        public Result<Id> Remove(Id item)
         {
-            throw new NotImplementedException();
-        }
-
-        private string GetNanny(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string Group(string[] args)
-        {
-            switch (args[0])
+            Result<Id> result = new Result<Id>(item);
+            switch (item.GetTypeName)
             {
                 case "Child":
-                    return GroupChild(args);
+                    break;
                 case "Mother":
-                    return GroupMother(args);
+                    break;
                 case "Nanny":
-                    return GroupNanny(args);
+                    break;
                 case "Contract":
-                    return GroupContract(args);
+                    break;
                 default:
-                    return ErrorInvaildMassege(args[0]);
+                    break;
             }
+            return this.Dal.Remove(item);
         }
 
-        private string GroupChild(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        private string GroupContract(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        private string GroupMother(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        private string GroupNanny(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string Remove(string[] args)
-        {
-            switch (args[0])
-            {
-                case "Child":
-                    return RemoveChild(args);
-                case "Mother":
-                    return RemoveMother(args);
-                case "Nanny":
-                    return RemoveNanny(args);
-                case "Contract":
-                    return RemoveContract(args);
-                default:
-                    return ErrorInvaildMassege(args[0]);
-            }
-        }
-
-        private string RemoveChild(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        private string RemoveContract(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        private string RemoveMother(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        private string RemoveNanny(string[] args)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
     }
 }

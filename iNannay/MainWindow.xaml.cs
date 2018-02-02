@@ -22,10 +22,7 @@ namespace iNannay
     {
 
 
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        public MainWindow() => InitializeComponent();
 
         private void btnMothers_Click(object sender, RoutedEventArgs e)
         {
